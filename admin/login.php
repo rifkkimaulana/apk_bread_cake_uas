@@ -8,7 +8,7 @@ if (isset($_SESSION['username'])) {
     header("Location: dashboard.php?page=dashboard");
 }
 if (isset($_POST['submit'])) {
-    include("../konfig.php");
+    include("../config/config.php");
     $username = @$_POST['username'];
     $password = md5(@$_POST['password']);
 
@@ -20,7 +20,12 @@ if (isset($_POST['submit'])) {
         $_SESSION['id'] = $row['id'];
         header("Location: dashboard.php?page=dashboard");
     } else {
-        echo "<script>alert('Username atau password Anda salah. Silahkan coba lagi!')</script>";
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+        echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+        echo '<span aria-hidden="true">&times;</span>';
+        echo '</button>';
+        echo '<strong>Error!</strong> Username atau password Anda salah. Silakan coba lagi!';
+        echo '</div>';
     }
 }
 ?>
@@ -42,6 +47,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/adminlte.min.css">
+
 </head>
 
 <body class="hold-transition login-page">
@@ -74,7 +80,7 @@ if (isset($_POST['submit'])) {
                     <div class="row">
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block" name="subimt">Login</button>
+                            <button type="submit" class="btn btn-primary btn-block" name="submit">Login</button>
                         </div>
                         <!-- /.col -->
                     </div>
