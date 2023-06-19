@@ -53,9 +53,9 @@ include_once("../config/config.php");
                                         </td>
                                         <td>
                                             <a class="btn btn-success"
-                                                href='users/update.php?id=<?= $data['id'] ?>&page=users'>Edit</a>
+                                                href='customer/update.php?id=<?= $data['id'] ?>&page=customer'>Edit</a>
                                             <a class="btn btn-danger" onclick='return confirmDelete()'
-                                                href='users/delete.php?id=<?= $data['id'] ?>&page=users'>Hapus</a>
+                                                href='customer/delete.php?id=<?= $data['id'] ?>&page=customer'>Hapus</a>
                                         </td>
                                     </tr>
                                 <?php }

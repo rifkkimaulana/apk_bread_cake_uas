@@ -1,28 +1,27 @@
 <?php
 include_once("../../config/config.php");
 include('session.php');
+
 $id = @$_GET['id'];
-$result = mysqli_query($mysqli, "SELECT * FROM tb_users WHERE id=$id");
+$result = mysqli_query($mysqli, "SELECT * FROM tb_customer WHERE id=$id");
 while ($user_data = mysqli_fetch_array($result)) {
-    $row_nama_operator = $user_data['nama_operator'];
-    $row_username = $user_data['username'];
+    $row_nama = $user_data['nama'];
+    $row_alamat = $user_data['alamat'];
+    $row_telpon = $user_data['telpon'];
     $row_email = $user_data['email'];
 }
 ?>
+
 <?php
 if (isset($_POST['update'])) {
     $id = $_POST['id'];
-    $username = @$_POST['username'];
-    $password = @$_POST['password'];
+    $nama = @$_POST['nama'];
+    $alamat = @$_POST['alamat'];
+    $telpon = @$_POST['telpon'];
     $email = @$_POST['email'];
-    $nama_operator = @$_POST['nama_operator'];
-    if ($password) {
-        $result = mysqli_query($mysqli, "UPDATE tb_users SET username='$username',nama_operator='$nama_operator',password='$password', email='$email' WHERE id=$id");
-    } else {
-        $result = mysqli_query($mysqli, "UPDATE tb_users SET username='$username',nama_operator='$nama_operator',email='$email' WHERE id=$id");
-        echo "<script>alert('Berhasil disimpan!'); window.location.href = '../../admin/dashboard.php?page=users';</script>";
-    }
-    header("Location:../dashboard.php?page=users");
+    $result = mysqli_query($mysqli, "UPDATE tb_customer SET nama='$nama',alamat='$alamat',telpon='$telpon', email='$email' WHERE id=$id");
+    echo "<script>alert('Berhasil disimpan!'); window.location.href = '../../admin/dashboard.php?page=customer';</script>";
+    header("Location:../dashboard.php?page=customer");
 }
 ?>
 <!DOCTYPE html>
@@ -53,28 +52,29 @@ if (isset($_POST['update'])) {
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Data Pengguna</h3>
+                                    <h3 class="card-title">Data Customer</h3>
                                     <div class="card-tools">
-                                        <a href="../../admin/dashboard.php?page=users" class="btn btn-info">Kembali</a>
+                                        <a href="../../admin/dashboard.php?page=customer"
+                                            class="btn btn-info">Kembali</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <form method="post">
                                         <input type="hidden" name="id" value="<?= $id ?>">
                                         <div class="form-group">
-                                            <label for="nama_operator">Nama Operator</label>
-                                            <input type="text" class="form-control" value="<?= $row_nama_operator ?>"
-                                                name="nama_operator" required>
+                                            <label for="nama">Nama Lengkap</label>
+                                            <input type="text" class="form-control" value="<?= $row_nama ?>" name="nama"
+                                                required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="username">Username</label>
-                                            <input type="text" class="form-control" value="<?= $row_username ?>"
-                                                name="username" required autofocus>
+                                            <label for="alamat">Alamat</label>
+                                            <input type="text" class="form-control" value="<?= $row_alamat ?>"
+                                                name="alamat" required autofocus>
                                         </div>
                                         <div class="form-group">
-                                            <label for="password">Password</label>
-                                            <input type="password" class="form-control" value="" name="password">
-                                            <span class="help-block"> Kosongkan bila tidak di ubah</span>
+                                            <label for="Telpon">Telpon</label>
+                                            <input type="text" class="form-control" value="<?= $row_telpon ?>"
+                                                name="telpon">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email</label>
