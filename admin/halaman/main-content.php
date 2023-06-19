@@ -10,6 +10,9 @@
                 case 'users':
                     include "users/index.php";
                     break;
+                case 'customer':
+                    include "customer/index.php";
+                    break;
                 case 'produk':
                     include "produk/index.php";
                     break;

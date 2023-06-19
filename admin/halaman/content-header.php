@@ -11,6 +11,9 @@
                 case 'users':
                     include "users/content-header.php";
                     break;
+                case 'customer':
+                    include "customer/content-header.php";
+                    break;
                 case 'produk':
                     include "produk/content-header.php";
                     break;

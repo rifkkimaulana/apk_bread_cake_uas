@@ -31,9 +31,18 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                 <li class="nav-item">
                     <a href="<?= $base_url ?>/dashboard.php?page=users"
                         class="nav-link <?php echo ($page == 'users') ? 'active' : ''; ?>">
-                        <i class="nav-icon fas fa-users"></i>
+                        <i class="nav-icon fa fa-user"></i>
                         <p>
                             Users
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= $base_url ?>/dashboard.php?page=customer"
+                        class="nav-link <?php echo ($page == 'customer') ? 'active' : ''; ?>">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Customer
                         </p>
                     </a>
                 </li>
@@ -69,7 +78,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-bars"></i>
                         <p>
-                            Menu
+                            Pengaturan
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
