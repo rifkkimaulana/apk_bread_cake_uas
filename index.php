@@ -121,6 +121,7 @@
     <?php include 'booking.php'; ?>
     <?php include 'gallery.php'; ?>
     <?php include 'kontak.php'; ?>
+    <?php include 'about.php'; ?>
 
   </main> <!-- End #main -->
   <?php include 'footer.php'; ?>
