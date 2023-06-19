@@ -51,8 +51,7 @@ if (isset($_POST['submit'])) {
                                     <h3 class="card-title">Data Kategori
                                     </h3>
                                     <div class="card-tools">
-                                        <a href="<?= $base_url_admin ?>/dashboard.php?page=kategori_produk"
-                                            class="btn btn-info">Kembali</a>
+                                        <a href="../dashboard.php?page=kategori_produk" class="btn btn-info">Kembali</a>
                                     </div>
                                 </div>
                                 <form action="../kategori_produk/create.php?page=kategori_produk" method="post"

@@ -30,43 +30,59 @@ include_once("../config/config.php");
                                 <th>Aksi</th>
                             </tr>
                             <?php
-                            $no = 1;
-                            $result = mysqli_query($mysqli, "SELECT tb_produk.*, tb_kategori_produk.kategori_produk
-                                    FROM tb_produk
-                                    INNER JOIN tb_kategori_produk ON tb_produk.kategori_id = tb_kategori_produk.id
-                                    ORDER BY id DESC");
-                            while ($data = mysqli_fetch_array($result)) {
+                            include_once("../config/config.php");
+
+                            // Query untuk mendapatkan data produk dengan kategori yang sesuai
+                            $query = "SELECT tb_produk.*, tb_kategori_produk.kategori_produk
+          FROM tb_produk
+          INNER JOIN tb_kategori_produk ON tb_produk.id_kategori = tb_kategori_produk.id
+          ORDER BY tb_produk.id DESC";
+
+                            $result = mysqli_query($mysqli, $query);
+                            if (mysqli_num_rows($result) > 0) {
+                                $no = 1; // Nomor urut
+                            
+                                while ($data = mysqli_fetch_array($result)) {
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <?= $no++ ?>
+                                        </td>
+                                        <td>
+                                            <?= $data['nama_produk'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $data['kategori_produk'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $data['deskripsi'] ?>
+                                        </td>
+                                        <td>
+                                            Rp
+                                            <?= number_format($data['harga'], 0, ',', '.') ?>
+                                        </td>
+                                        <td>
+                                            <?= $data['stok'] ?>
+                                        </td>
+                                        <td><img src="produk/image/<?= $data['image'] ?>" width="100"></td>
+                                        <td>
+                                            <a class="btn btn-success"
+                                                href='produk/update.php?id=<?= $data['id'] ?>&page=produk'>Edit</a>
+                                            <a class="btn btn-danger" onclick='return confirmDelete()'
+                                                href='produk/delete.php?id=<?= $data['id'] ?>&page=produk'>Hapus</a>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                            } else {
                                 ?>
                                 <tr>
-                                    <td>
-                                        <?= $no++ ?>
-                                    </td>
-                                    <td>
-                                        <?= $data['nama_produk'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $data['kategori_produk'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $data['deskripsi'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $data['harga'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $data['stok'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $data['Gambar'] ?>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-success"
-                                            href='produk/update.php?id=<?= $data['id'] ?>&page=produk'>Edit</a>
-                                        <a class="btn btn-danger" onclick='return confirmDelete()'
-                                            href='produk/delete.php?id=<?= $data['id'] ?>&page=produk'>Hapus</a>
-                                    </td>
+                                    <td colspan="8">Tidak ada data produk.</td>
                                 </tr>
-                            <?php } ?>
+                                <?php
+                            }
+                            ?>
+
                         </table>
 
                     </div>
