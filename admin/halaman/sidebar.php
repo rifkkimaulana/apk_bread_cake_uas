@@ -4,7 +4,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
 ?>
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="dashboard.php" class="brand-link">
+    <a href="<?= $base_url ?>/dashboard.php" class="brand-link">
         <span class="brand-text font-weight-light"><b>ADMIN DASHBOARD</b></span>
     </a>
     <div class="sidebar">
@@ -48,7 +48,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                 </li>
                 <li class="nav-item">
                     <a href="<?= $base_url ?>/dashboard.php?page=kategori_produk"
-                        class="nav-link <?php echo ($page == 'kategori') ? 'active' : ''; ?>">
+                        class="nav-link <?php echo ($page == 'kategori_produk') ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>
                             Kategori Produk
@@ -65,8 +65,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $base_url ?>/dashboard.php?page=berita"
-                        class="nav-link <?php echo ($page == 'berita') ? 'active' : ''; ?>">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-bars"></i>
                         <p>
                             Menu
@@ -75,71 +74,57 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=berita"
-                                class="nav-link <?php echo ($page == 'berita') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=profil_toko"
+                                class="nav-link <?php echo ($page == 'profil_toko') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Profil Toko</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=berita"
-                                class="nav-link <?php echo ($page == 'berita') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=booking"
+                                class="nav-link <?php echo ($page == 'booking') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Booking</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=berita"
-                                class="nav-link <?php echo ($page == 'berita') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=no_rekening"
+                                class="nav-link <?php echo ($page == 'no_rekening') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>No. Rekening</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=berita"
-                                class="nav-link <?php echo ($page == 'berita') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=gallery"
+                                class="nav-link <?php echo ($page == 'gallery') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Gallery</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=berita"
-                                class="nav-link <?php echo ($page == 'berita') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=chefs"
+                                class="nav-link <?php echo ($page == 'chefs') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Chefs</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=berita"
-                                class="nav-link <?php echo ($page == 'berita') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=events"
+                                class="nav-link <?php echo ($page == 'events') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Events</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=berita"
-                                class="nav-link <?php echo ($page == 'berita') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=testimoni"
+                                class="nav-link <?php echo ($page == 'testimoni') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Testimoni</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=berita"
-                                class="nav-link <?php echo ($page == 'berita') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=about"
+                                class="nav-link <?php echo ($page == 'about') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>About</p>
                             </a>
