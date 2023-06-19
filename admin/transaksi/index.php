@@ -47,10 +47,10 @@ include_once("../config/config.php");
                                             <?= $data['tanggal_transaksi'] ?>
                                         </td>
                                         <td>
-                                            <?= $data['total_bayar'] ?>
+                                            <?= $data['total_pembayaran'] ?>
                                         </td>
                                         <td>
-                                            <?= $data['metode_transaksi'] ?>
+                                            <?= $data['metode_pembayaran'] ?>
                                         </td>
                                         <td>
                                             <?= $data['status_transaksi'] ?>

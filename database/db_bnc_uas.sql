@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Jun 2023 pada 12.14
+-- Waktu pembuatan: 19 Jun 2023 pada 23.51
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 7.4.30
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_bnc_uas`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_customer`
+--
+
+CREATE TABLE `tb_customer` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `alamat` varchar(255) NOT NULL,
+  `telpon` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `create_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_customer`
+--
+
+INSERT INTO `tb_customer` (`id`, `nama`, `alamat`, `telpon`, `email`, `create_time`) VALUES
+(1, 'Rifki Maulana', 'DUSUN CINAGLANG, RT002/RW002, DESA NEGLASARI, KECAMATAN DARMARAJA', '083130649979', 'rifkkimaulana@gmail.com', '2023-06-19 17:28:01'),
+(2, 'Lasmini / Atharazka 2', 'DUSUN CINAGLANG, RT002/RW002, DESA NEGLASARI, KECAMATAN DARMARAJA', '083103064997', 'cs@imasnet.id', '2023-06-19 17:30:01');
 
 -- --------------------------------------------------------
 
@@ -60,7 +83,48 @@ CREATE TABLE `tb_produk` (
 --
 
 INSERT INTO `tb_produk` (`id`, `nama_produk`, `id_kategori`, `deskripsi`, `harga`, `stok`, `image`) VALUES
-(3, 'Magnam Tiste', 2, 'deskripsi: Magnam Tiste', 20000, 20, 'upload_20230619113830_menu-item-1.png');
+(3, 'Magnam Tiste 33', 2, 'deskripsi: Magnam Tiste 2', 21000, 10, 'upload_20230619161521_menu-item-1.png'),
+(4, 'tesdatapro', 2, 'asdfasdf', 50000, 2, 'upload_20230619213551_logo.png');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_transaksi`
+--
+
+CREATE TABLE `tb_transaksi` (
+  `id` int(11) NOT NULL,
+  `no_transaksi` varchar(50) NOT NULL,
+  `id_customer` int(11) NOT NULL,
+  `tanggal_transaksi` datetime NOT NULL,
+  `total_pembayaran` int(11) NOT NULL,
+  `metode_pembayaran` varchar(20) NOT NULL,
+  `status_transaksi` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_transaksi`
+--
+
+INSERT INTO `tb_transaksi` (`id`, `no_transaksi`, `id_customer`, `tanggal_transaksi`, `total_pembayaran`, `metode_pembayaran`, `status_transaksi`) VALUES
+(33, 'trx-0007', 1, '2023-06-19 23:37:40', 0, 'Cash', 'Lunas'),
+(34, 'trx-0007', 1, '2023-06-19 23:37:40', 0, 'Cash', 'Lunas'),
+(35, 'trx-0008', 1, '2023-06-19 23:42:23', 0, 'Cash', 'Lunas');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_transaksi_detail`
+--
+
+CREATE TABLE `tb_transaksi_detail` (
+  `id` int(11) NOT NULL,
+  `id_transaksi` int(11) NOT NULL,
+  `id_produk` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `harga` int(11) NOT NULL,
+  `subtotal` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -81,11 +145,17 @@ CREATE TABLE `tb_users` (
 --
 
 INSERT INTO `tb_users` (`id`, `nama_operator`, `username`, `password`, `email`) VALUES
-(1, 'Kelompok 6', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'rifkkimaulana@gmail.com');
+(4, 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'rifkkimaulana@gmail.com');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `tb_customer`
+--
+ALTER TABLE `tb_customer`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeks untuk tabel `tb_kategori_produk`
@@ -100,6 +170,18 @@ ALTER TABLE `tb_produk`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `tb_transaksi`
+--
+ALTER TABLE `tb_transaksi`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `tb_transaksi_detail`
+--
+ALTER TABLE `tb_transaksi_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `tb_users`
 --
 ALTER TABLE `tb_users`
@@ -108,6 +190,12 @@ ALTER TABLE `tb_users`
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_customer`
+--
+ALTER TABLE `tb_customer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kategori_produk`
@@ -119,13 +207,25 @@ ALTER TABLE `tb_kategori_produk`
 -- AUTO_INCREMENT untuk tabel `tb_produk`
 --
 ALTER TABLE `tb_produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_transaksi`
+--
+ALTER TABLE `tb_transaksi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_transaksi_detail`
+--
+ALTER TABLE `tb_transaksi_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
