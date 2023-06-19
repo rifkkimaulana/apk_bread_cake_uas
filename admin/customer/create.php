@@ -6,22 +6,22 @@ include("../../config/config.php");
 include('session.php');
 
 if (isset($_POST['submit'])) {
-    $nama = @$_POST['nama'];
-    $alamat = @$_POST['alamat'];
-    $telpon = md5(@$_POST['telpon']);
-    $email = @$_POST['email'];
+    $nama = $_POST['nama'];
+    $alamat = $_POST['alamat'];
+    $telpon = $_POST['telpon'];
+    $email = $_POST['email'];
     $date_time = date('Y-m-d H:i:s');
 
-    $sql = "SELECT * FROM tb_customer WHERE nama='$nama'";
-    $result = mysqli_query($mysqli, $sql);
-    if ($result->num_rows > 0) {
-        echo "<script>alert('Username sudah ada. Silahkan coba lagi!')</script>";
+    $result = mysqli_query($mysqli, "INSERT INTO tb_customer (nama, alamat, telpon, email, create_time) VALUES ('$nama', '$alamat', '$telpon', '$email', '$date_time')");
+    if ($result) {
+        echo "<script>window.location.href = '../../admin/dashboard.php?page=customer';</script>";
+        exit;
     } else {
-        $result = mysqli_query($mysqli, "INSERT INTO tb_customer(nama,alamat,telpon,email,create_time) VALUES('$nama','$alamat','$telpon','$email', '$date_time)");
-        echo "<script> window.location.href = '../../admin/dashboard.php?page=customer';</script>";
+        echo "Gagal menambahkan data customer: " . mysqli_error($mysqli);
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
