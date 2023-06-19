@@ -38,7 +38,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $base_url ?>/dashboard.php?page=menu"
+                    <a href="<?= $base_url ?>/dashboard.php?page=produk"
                         class="nav-link <?php echo ($page == 'menu') ? 'active' : ''; ?>">
                         <i class="nav-icon fa fa-shopping-cart"></i>
                         <p>

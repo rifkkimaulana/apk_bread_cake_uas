@@ -27,16 +27,14 @@ include_once("../config/config.php");
                                 <th>Harga</th>
                                 <th>Stok</th>
                                 <th>Gambar</th>
+                                <th>Aksi</th>
                             </tr>
                             <?php
                             $no = 1;
-                            $result = mysqli_query($mysqli, "SELECT tb_artikel.*,
-                            tb_kategori.nama_kategori,
-                            tb_users.nama_operator
-                            FROM tb_artikel
-                            INNER JOIN tb_kategori ON tb_artikel.id_kategori = tb_kategori.id
-                            INNER JOIN tb_users ON tb_artikel.user_id = tb_users.id
-                            ORDER BY id DESC");
+                            $result = mysqli_query($mysqli, "SELECT tb_produk.*, tb_kategori_produk.kategori_produk
+                                    FROM tb_produk
+                                    INNER JOIN tb_kategori_produk ON tb_produk.kategori_id = tb_kategori_produk.id
+                                    ORDER BY id DESC");
                             while ($data = mysqli_fetch_array($result)) {
                                 ?>
                                 <tr>
@@ -44,23 +42,33 @@ include_once("../config/config.php");
                                         <?= $no++ ?>
                                     </td>
                                     <td>
-                                        <?= $data['Nama Produk'] ?>
+                                        <?= $data['nama_produk'] ?>
                                     </td>
                                     <td>
-                                        <?= $data['nama_kategori'] ?>
+                                        <?= $data['kategori_produk'] ?>
                                     </td>
                                     <td>
-                                        <?= $data['nama_operator'] ?>
+                                        <?= $data['deskripsi'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $data['harga'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $data['stok'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $data['Gambar'] ?>
                                     </td>
                                     <td>
                                         <a class="btn btn-success"
-                                            href='artikel/edit.php?id=<?= $data['id'] ?>&page=artikel'>Edit</a>
+                                            href='produk/update.php?id=<?= $data['id'] ?>&page=produk'>Edit</a>
                                         <a class="btn btn-danger" onclick='return confirmDelete()'
-                                            href='artikel/delete.php?id=<?= $data['id'] ?>&page=artikel'>Hapus</a>
+                                            href='produk/delete.php?id=<?= $data['id'] ?>&page=produk'>Hapus</a>
                                     </td>
                                 </tr>
                             <?php } ?>
                         </table>
+
                     </div>
                 </div>
             </div>
