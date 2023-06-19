@@ -54,10 +54,8 @@ include_once("../config/config.php");
                                         <td>
                                             <a class="btn btn-success"
                                                 href='users/update.php?id=<?= $data['id'] ?>&page=users'>Edit</a>
-                                            <?php if ($data['username'] != 'admin') { ?>
-                                                <a class="btn btn-danger" onclick='return confirmDelete()'
-                                                    href='users/delete.php?id=<?= $data['id'] ?>&page=users'>Hapus</a>
-                                            <?php } ?>
+                                            <a class="btn btn-danger" onclick='return confirmDelete()'
+                                                href='users/delete.php?id=<?= $data['id'] ?>&page=users'>Hapus</a>
                                         </td>
                                     </tr>
                                 <?php }
