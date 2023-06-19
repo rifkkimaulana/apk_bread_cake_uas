@@ -56,15 +56,16 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $base_url ?>/dashboard.php?page=artikel"
-                        class="nav-link <?php echo ($page == 'artikel') ? 'active' : ''; ?>">
+                    <a href="<?= $base_url ?>/dashboard.php?page=transaksi"
+                        class="nav-link <?php echo ($page == 'transaksi') ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-money-bill"></i>
                         <p>
                             Data Transaksi
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li
+                    class="nav-item has-treeview <?php echo ($page == 'profil_toko' || $page == 'booking' || $page == 'no_rekening' || $page == 'gallery' || $page == 'chefs' || $page == 'events' || $page == 'testimoni' || $page == 'about') ? 'menu-open' : ''; ?>">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-bars"></i>
                         <p>
@@ -131,6 +132,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                         </li>
                     </ul>
                 </li>
+
+
                 <li class="nav-item">
                     <a href="<?= $base_url ?>/logout.php" class="nav-link"
                         onclick="return confirm('Apakah Anda yakin ingin keluar?')">

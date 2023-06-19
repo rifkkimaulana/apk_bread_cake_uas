@@ -7,16 +7,16 @@ include('session.php');
 
 if (isset($_POST['update'])) {
     $nama_produk = $_POST['nama_produk'];
+    $id_kategori = $_POST['id_kategori'];
     $deskripsi = $_POST['deskripsi'];
-    $kategori_id = $_POST['kategori_id'];
     $harga = $_POST['harga'];
     $stok = $_POST['stok'];
     $produk_id = $_POST['id_produk'];
 
     // Memeriksa apakah ada file gambar yang diunggah
-    if (isset($_FILES['image']) && $_FILES['iamge']['error'] === UPLOAD_ERR_OK) {
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $file = $_FILES['image'];
-        $kategori_id = isset($_POST['kategori_id']) ? $_POST['kategori_id'] : $data['kategori_id'];
+        $id_kategori = isset($_POST['id_kategori']) ? $_POST['id_kategori'] : $data['id_kategori'];
 
         // Memeriksa tipe file
         $allowedTypes = array('image/jpeg', 'image/png');
@@ -55,33 +55,28 @@ if (isset($_POST['update'])) {
                 }
             }
 
-            $result = mysqli_query($mysqli, "UPDATE tb_produk SET nama_produk='$nama_produk', deskripsi='$deskripsi', kategori_id='$kategori_id', harga='$harga', stok='$stok', image='$uploaddb' WHERE id='$produk_id'");
+            $result = mysqli_query($mysqli, "UPDATE tb_produk SET nama_produk='$nama_produk', deskripsi='$deskripsi', id_kategori='$id_kategori', harga='$harga', stok='$stok', image='$uploaddb' WHERE id='$produk_id'");
 
             if ($result) {
-                // Berhasil mengubah data dan gambar
                 echo "<script>window.location.href = '../../admin/dashboard.php?page=produk';</script>";
                 exit;
             } else {
-                // Gagal mengubah data dan gambar
                 echo "<script>alert('Gagal mengubah produk!');</script>";
                 exit;
             }
         } else {
-            // Gagal memindahkan file ke direktori tujuan
             echo "<script>alert('Gagal mengunggah file!');</script>";
             exit;
         }
     } else {
         // Tidak ada file gambar yang diunggah, hanya mengubah data produk
-        $result = mysqli_query($mysqli, "UPDATE tb_produk SET nama_produk='$nama_produk', deskripsi='$deskripsi', kategori_id='$kategori_id', harga='$harga', stok='$stok' WHERE id='$produk_id'");
+        $result = mysqli_query($mysqli, "UPDATE tb_produk SET nama_produk='$nama_produk', deskripsi='$deskripsi', id_kategori='$id_kategori', harga='$harga', stok='$stok' WHERE id='$produk_id'");
 
         if ($result) {
-            // Berhasil mengubah data produk
             echo "<script>alert('Produk berhasil diubah!');</script>";
             echo "<script>window.location.href = '../../admin/dashboard.php?page=produk';</script>";
             exit;
         } else {
-            // Gagal mengubah data produk
             echo "<script>alert('Gagal mengubah produk!');</script>";
             exit;
         }
@@ -153,13 +148,12 @@ if (isset($_POST['update'])) {
                                         ?>
 
                                         <div class="form-group">
-                                            <label for="kategori_id">Kategori</label>
-                                            <select class="form-control" name="kategori_id">
+                                            <label for="id_kategori">Kategori</label>
+                                            <select class="form-control" name="id_kategori">
                                                 <option value="">Pilih Kategori</option>
                                                 <?php
-                                                $kategori = mysqli_query($mysqli, "SELECT * FROM tb_kategori_produk ORDER BY id DESC");
                                                 while ($row = mysqli_fetch_array($kategori)) {
-                                                    $selected = ($row['id'] == $data['kategori_id']) ? 'selected' : '';
+                                                    $selected = ($row['id'] == $data['id_kategori']) ? 'selected' : '';
                                                     echo "<option value='{$row['id']}' {$selected}>{$row['kategori_produk']}</option>";
                                                 }
                                                 ?>

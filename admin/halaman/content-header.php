@@ -5,6 +5,9 @@
             $page = $_GET['page'];
 
             switch ($page) {
+                case 'dashboard':
+                    include "dashboard/content-header.php";
+                    break;
                 case 'users':
                     include "users/content-header.php";
                     break;
@@ -13,6 +16,9 @@
                     break;
                 case 'kategori_produk':
                     include "kategori_produk/content-header.php";
+                    break;
+                case 'transaksi':
+                    include "transaksi/content-header.php";
                     break;
                 default:
                     echo "<center><h3>Maaf. Halaman tidak ditemukan!</h3></center>";
