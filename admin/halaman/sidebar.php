@@ -47,7 +47,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $base_url ?>/dashboard.php?page=kategori"
+                    <a href="<?= $base_url ?>/dashboard.php?page=kategori_produk"
                         class="nav-link <?php echo ($page == 'kategori') ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>

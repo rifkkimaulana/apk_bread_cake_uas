@@ -11,20 +11,14 @@
                 case 'artikel':
                     include "artikel/content-header.php";
                     break;
-                case 'kategori':
-                    include "kategori/content-header.php";
-                    break;
-                case 'kategori_berita':
-                    include "kategori_berita/content-header.php";
+                case 'kategori_produk':
+                    include "kategori_produk/content-header.php";
                     break;
                 case 'menu':
                     include "menu/content-header.php";
                     break;
                 case 'dashboard':
                     include "dashboard/content-header.php";
-                    break;
-                case 'berita':
-                    include "berita/content-header.php";
                     break;
                 case 'about_content':
                     include "about_content/content-header.php";
