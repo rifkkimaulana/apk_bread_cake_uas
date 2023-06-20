@@ -64,16 +64,19 @@ include_once("session.php");
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../dist/js/demo.js"></script>
+    <!-- Page specific script -->
 
     <script>
         $(function () {
-            $("#tabel").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#tabel-simpel').DataTable({
+            $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,
                 "searching": false,
@@ -97,7 +100,6 @@ include_once("session.php");
             }
         }
     </script>
-    <script src="toastr.js"></script>
 
 </body>
 
