@@ -15,32 +15,36 @@ include_once("../config/config.php");
                         </div>
                     </div>
                     <div class="card-body">
-                        <table width='100%' id='tabel-simpel' class="table table-bordered">
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Kategori</th>
-                                <th>Aksi</th>
-                            </tr>
+                        <table width='100%' id='example2' class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Kategori</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
                             <?php
                             $no = 1;
                             $result = mysqli_query($mysqli, "SELECT * FROM tb_kategori_produk ORDER BY id DESC");
 
                             while ($data = mysqli_fetch_array($result)) {
                                 ?>
-                                <tr>
-                                    <td>
-                                        <?= $no++ ?>
-                                    </td>
-                                    <td>
-                                        <?= $data['kategori_produk'] ?>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-success"
-                                            href='kategori_produk/update.php?id=<?= $data['id'] ?>&page=kategori_produk'>Edit</a>
-                                        <a class="btn btn-danger" onclick='return confirmDelete()'
-                                            href='kategori_produk/delete.php?id=<?= $data['id'] ?>&page=kategori_produk'>Hapus</a>
-                                    </td>
-                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <?= $no++ ?>
+                                        </td>
+                                        <td>
+                                            <?= $data['kategori_produk'] ?>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-success"
+                                                href='kategori_produk/update.php?id=<?= $data['id'] ?>&page=kategori_produk'>Edit</a>
+                                            <a class="btn btn-danger" onclick='return confirmDelete()'
+                                                href='kategori_produk/delete.php?id=<?= $data['id'] ?>&page=kategori_produk'>Hapus</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             <?php } ?>
                         </table>
                     </div>

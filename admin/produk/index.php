@@ -18,17 +18,19 @@ include_once("../config/config.php");
                         <!-- /.card-tools -->
                     </div>
                     <div class="card-body">
-                        <table width='100%' id='tabel-simpel' class="table table-bordered">
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Produk</th>
-                                <th>Kategori</th>
-                                <th>Deskripsi</th>
-                                <th>Harga</th>
-                                <th>Stok</th>
-                                <th>Gambar</th>
-                                <th>Aksi</th>
-                            </tr>
+                        <table width='100%' id='example2' class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Produk</th>
+                                    <th>Kategori</th>
+                                    <th>Deskripsi</th>
+                                    <th>Harga</th>
+                                    <th>Stok</th>
+                                    <th>Gambar</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
                             <?php
                             include_once("../config/config.php");
 
@@ -44,34 +46,36 @@ include_once("../config/config.php");
                             
                                 while ($data = mysqli_fetch_array($result)) {
                                     ?>
-                                    <tr>
-                                        <td>
-                                            <?= $no++ ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['nama_produk'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['kategori_produk'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['deskripsi'] ?>
-                                        </td>
-                                        <td>
-                                            Rp
-                                            <?= number_format($data['harga'], 0, ',', '.') ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['stok'] ?>
-                                        </td>
-                                        <td><img src="produk/image/<?= $data['image'] ?>" width="100"></td>
-                                        <td>
-                                            <a class="btn btn-success"
-                                                href='produk/update.php?id=<?= $data['id'] ?>&page=produk'>Edit</a>
-                                            <a class="btn btn-danger" onclick='return confirmDelete()'
-                                                href='produk/delete.php?id=<?= $data['id'] ?>&page=produk'>Hapus</a>
-                                        </td>
-                                    </tr>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <?= $no++ ?>
+                                            </td>
+                                            <td>
+                                                <?= $data['nama_produk'] ?>
+                                            </td>
+                                            <td>
+                                                <?= $data['kategori_produk'] ?>
+                                            </td>
+                                            <td>
+                                                <?= $data['deskripsi'] ?>
+                                            </td>
+                                            <td>
+                                                Rp
+                                                <?= number_format($data['harga'], 0, ',', '.') ?>
+                                            </td>
+                                            <td>
+                                                <?= $data['stok'] ?>
+                                            </td>
+                                            <td><img src="produk/image/<?= $data['image'] ?>" width="100"></td>
+                                            <td>
+                                                <a class="btn btn-success"
+                                                    href='produk/update.php?id=<?= $data['id'] ?>&page=produk'>Edit</a>
+                                                <a class="btn btn-danger" onclick='return confirmDelete()'
+                                                    href='produk/delete.php?id=<?= $data['id'] ?>&page=produk'>Hapus</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                     <?php
                                 }
                             } else {

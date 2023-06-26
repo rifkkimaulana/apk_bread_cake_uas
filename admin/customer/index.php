@@ -16,48 +16,52 @@ include_once("../config/config.php");
                         </div>
                     </div>
                     <div class="card-body">
-                        <table width='100%' id='tabel-simpel' class="table table-bordered">
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Lengkap</th>
-                                <th>Alamat</th>
-                                <th>Telpon</th>
-                                <th>Email</th>
-                                <th>Dibuat</th>
-                                <th>Aksi</th>
-                            </tr>
+                        <table width='100%' id='example2' class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Lengkap</th>
+                                    <th>Alamat</th>
+                                    <th>Telpon</th>
+                                    <th>Email</th>
+                                    <th>Dibuat</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
                             <?php
                             $no = 1;
                             $result = mysqli_query($mysqli, "SELECT * FROM tb_customer ORDER BY id DESC");
                             if (mysqli_num_rows($result) > 0) {
                                 while ($data = mysqli_fetch_array($result)) {
                                     ?>
-                                    <tr>
-                                        <td>
-                                            <?= $no++ ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['nama'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['alamat'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['telpon'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['email'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['create_time'] ?>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-success"
-                                                href='customer/update.php?id=<?= $data['id'] ?>&page=customer'>Edit</a>
-                                            <a class="btn btn-danger" onclick='return confirmDelete()'
-                                                href='customer/delete.php?id=<?= $data['id'] ?>&page=customer'>Hapus</a>
-                                        </td>
-                                    </tr>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <?= $no++ ?>
+                                            </td>
+                                            <td>
+                                                <?= $data['nama'] ?>
+                                            </td>
+                                            <td>
+                                                <?= $data['alamat'] ?>
+                                            </td>
+                                            <td>
+                                                <?= $data['telpon'] ?>
+                                            </td>
+                                            <td>
+                                                <?= $data['email'] ?>
+                                            </td>
+                                            <td>
+                                                <?= $data['create_time'] ?>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-success"
+                                                    href='customer/update.php?id=<?= $data['id'] ?>&page=customer'>Edit</a>
+                                                <a class="btn btn-danger" onclick='return confirmDelete()'
+                                                    href='customer/delete.php?id=<?= $data['id'] ?>&page=customer'>Hapus</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 <?php }
                             } else {
                                 echo "<tr><td colspan='7'>Tidak ada data customer.</td></tr>";
