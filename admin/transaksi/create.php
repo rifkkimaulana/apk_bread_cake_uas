@@ -34,12 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
 
         array_push($cart, $cartItem);
-
         // Simpan kembali keranjang belanja ke dalam session
         $_SESSION['cart'] = $cart;
     }
 }
-
 // Hitung total pembelian
 $total_pembelian = 0;
 foreach ($cart as $item) {
@@ -196,9 +194,6 @@ foreach ($cart as $item) {
                                                     </td>
                                                 </tr>
                                             </tfoot>
-
-
-
                                         </table>
                                     <?php endif; ?>
                                     </br>
@@ -364,12 +359,7 @@ foreach ($cart as $item) {
         function formatCurrency(amount) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(amount);
         }
-
     </script>
-
-
-
-
 </body>
 
 </html>
