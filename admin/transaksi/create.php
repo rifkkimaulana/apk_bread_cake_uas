@@ -157,14 +157,14 @@ if ($result_last_transaksi === false) {
                                                                     <tr>
                                                                         <th>Nama Produk</th>
                                                                         <th>Harga</th>
-                                                                        <th>Stok</th>
+                                                                        <th>Jumlah Beli</th>
                                                                         <th>Tambah</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <?php
                                                                     // Kode untuk mengambil data produk dari database
-                                                                    $query_produk = "SELECT * FROM tb_produk";
+                                                                    $query_produk = "SELECT nama_produk, harga FROM tb_produk";
                                                                     $result_produk = mysqli_query($mysqli, $query_produk);
                                                                     $count = 0;
 
@@ -173,10 +173,11 @@ if ($result_last_transaksi === false) {
                                                                         echo '<tr>';
                                                                         echo '<td>' . $row_produk['nama_produk'] . '</td>';
                                                                         echo '<td>Rp ' . $row_produk['harga'] . '</td>';
-                                                                        echo '<td>' . $row_produk['stok'] . '</td>';
+                                                                        echo '<td><input value="1" type="number" name="jumlah_beli[]" id="jumlah_beli_' . $count . '"></td>';
                                                                         echo '<td>';
-                                                                        echo '<button class="btn btn-primary btn-pilih" data-id="' . $row_produk['id'] . '">Pilih</button>';
+                                                                        echo '<button class="btn btn-primary btn-pilih" onclick="tambahProdukKeKeranjang(' . $count . ', \'' . $row_produk['nama_produk'] . '\', ' . $row_produk['harga'] . ', document.getElementById(\'jumlah_beli_' . $count . '\').value)">Pilih</button>';
                                                                         echo '</td>';
+
                                                                         echo '</tr>';
                                                                         $count++;
                                                                     }
@@ -184,6 +185,7 @@ if ($result_last_transaksi === false) {
                                                                 </tbody>
                                                             </table>
                                                         </div>
+
                                                     </div>
 
                                                 </div>
@@ -234,85 +236,122 @@ if ($result_last_transaksi === false) {
 
                                     <div class="card-header">
                                         <div class="card">
-                                            <div class="card-header">
-                                                Keranjang Belanja
-                                            </div>
-                                            <div class="card-body">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nama Produk</th>
-                                                            <th>Harga</th>
-                                                            <th>Jumlah</th>
-                                                            <th>Subtotal</th>
-                                                            <th>Aksi</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php
-                                                        // Cek apakah keranjang belanja sudah ada di session
-                                                        if (isset($_SESSION['keranjang'])) {
-                                                            // Looping setiap produk di keranjang belanja
-                                                            foreach ($_SESSION['keranjang'] as $idProduk => $jumlahBeli) {
-                                                                // Kode untuk mengambil data produk dari database berdasarkan ID produk
-                                                                $query_produk = "SELECT * FROM tb_produk WHERE id = $idProduk";
-                                                                $result_produk = mysqli_query($mysqli, $query_produk);
-                                                                $row_produk = mysqli_fetch_assoc($result_produk);
-                                                                $namaProduk = $row_produk['nama_produk'];
-                                                                $hargaProduk = $row_produk['harga'];
+                                            <?php
+                                            // Inisialisasi keranjang belanja jika belum ada
+                                            if (!isset($_SESSION['keranjang'])) {
+                                                $_SESSION['keranjang'] = array();
+                                            }
 
-                                                                // Hitung subtotal harga produk
-                                                                $subtotalHarga = $hargaProduk * $jumlahBeli;
-                                                                ?>
-                                                                <tr>
-                                                                    <td>
-                                                                        <?php echo $namaProduk; ?>
-                                                                    </td>
-                                                                    <td>Rp
-                                                                        <?php echo $hargaProduk; ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number"
-                                                                            name="jumlah_produk[<?php echo $idProduk; ?>]"
-                                                                            value="<?php echo $jumlahBeli; ?>">
-                                                                        </input>
-                                                                    </td>
-                                                                    <td>Rp
-                                                                        <?php echo $subtotalHarga; ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <form action="hapus_produk.php" method="post">
-                                                                            <input type="hidden" name="id_produk"
-                                                                                value="<?php echo $idProduk; ?>">
-                                                                            <button type="submit"
-                                                                                class="btn btn-danger btn-sm">Hapus</button>
-                                                                        </form>
-                                                                    </td>
-                                                                </tr>
-                                                                <?php
-                                                            }
-                                                        } else {
-                                                            ?>
-                                                            <tr>
-                                                                <td colspan="5">Keranjang belanja kosong</td>
-                                                            </tr>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td colspan="3" class="text-right">Total Harga:
-                                                            </td>
-                                                            <td colspan="2">Rp
+                                            // Tombol tambah ditekan
+                                            if (isset($_POST['tambah'])) {
+                                                // Dapatkan data dari formulir
+                                                $nama_produk = $_POST['nama_produk'];
+                                                $harga_satuan = $_POST['harga_satuan'];
+                                                $jumlah_beli = $_POST['jumlah_beli'];
+                                                $jumlah = $harga_satuan * $jumlah_beli;
 
-                                                            </td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                            </div>
+                                                // Tambahkan ke keranjang
+                                                array_push(
+                                                    $_SESSION['keranjang'],
+                                                    array(
+                                                        'nama_produk' => $nama_produk,
+                                                        'harga_satuan' => $harga_satuan,
+                                                        'jumlah_beli' => $jumlah_beli,
+                                                        'jumlah' => $jumlah
+                                                    )
+                                                );
+                                            }
+
+                                            // Tombol hapus ditekan
+                                            if (isset($_GET['hapus'])) {
+                                                $index = $_GET['hapus'];
+                                                unset($_SESSION['keranjang'][$index]);
+                                            }
+
+                                            // Tampilkan keranjang belanja
+                                            if (!empty($_SESSION['keranjang'])) {
+                                                ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Nama Produk</th>
+                                                                            <th>Harga Satuan</th>
+                                                                            <th>Jumlah Beli</th>
+                                                                            <th>Jumlah</th>
+                                                                            <th>Aksi</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <?php
+                                                                        $total_pembelian = 0;
+
+                                                                        foreach ($_SESSION['keranjang'] as $index => $item) {
+                                                                            echo '<tr>';
+                                                                            echo '<td>' . $item['nama_produk'] . '</td>';
+                                                                            echo '<td>' . $item['harga_satuan'] . '</td>';
+                                                                            echo '<td>' . $item['jumlah_beli'] . '</td>';
+                                                                            echo '<td>' . $item['jumlah'] . '</td>';
+                                                                            echo '<td><a href="?hapus=' . $index . '" class="btn btn-danger btn-sm">Hapus</a></td>';
+                                                                            echo '</tr>';
+
+                                                                            $total_pembelian += $item['jumlah'];
+                                                                        }
+                                                                        ?>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <br>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="card-title">Total Pembelian</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <p>Total Pembelian:
+                                                                    <?php echo $total_pembelian; ?>
+                                                                </p>
+                                                                <form method="post" action="">
+                                                                    <div class="form-group">
+                                                                        <label>Nominal Bayar:</label>
+                                                                        <input type="number" class="form-control"
+                                                                            name="nominal_bayar">
+                                                                    </div>
+                                                                    <button type="submit" name="proses"
+                                                                        class="btn btn-primary">Proses</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <?php
+                                                // Tombol proses ditekan
+                                                if (isset($_POST['proses'])) {
+                                                    $nominal_bayar = $_POST['nominal_bayar'];
+                                                    $kembalian = $nominal_bayar - $total_pembelian;
+
+                                                    echo '<br>';
+                                                    echo 'Total Pembelian: ' . $total_pembelian . '<br>';
+                                                    echo 'Nominal Bayar: ' . $nominal_bayar . '<br>';
+                                                    echo 'Kembalian: ' . $kembalian;
+                                                }
+                                            } else {
+                                                echo '<p>Keranjang belanja kosong.</p>';
+                                            }
+                                            ?>
                                         </div>
                                     </div>
+
 
 
                                     <div class="card-footer">
@@ -346,6 +385,31 @@ if ($result_last_transaksi === false) {
             });
         });
     </script>
+    <script>
+        function tambahProdukKeKeranjang(id, nama, harga, jumlah_beli) {
+            // Create a new XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+
+            // Prepare the request URL
+            var url = "tambah_ke_keranjang.php?id=" + id + "&nama=" + nama + "&harga=" + harga + "&jumlah_beli=" + jumlah_beli;
+
+            // Configure the request
+            xhr.open("GET", url, true);
+
+            // Send the request
+            xhr.send();
+
+            // Handle the response
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Handle the response from the server
+                    alert(xhr.responseText);
+                }
+            };
+        }
+    </script>
+
+
 </body>
 
 </html>
