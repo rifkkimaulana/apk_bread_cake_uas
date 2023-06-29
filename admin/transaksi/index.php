@@ -18,66 +18,54 @@ include_once("../config/config.php");
                         <table width='100%' id='example2' class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>No Transaksi</th>
+                                    <th>No Faktur</th>
+                                    <th>Tanggal Penjualan</th>
                                     <th>Customer</th>
-                                    <th>Tanggal</th>
                                     <th>Total Bayar</th>
                                     <th>Metode</th>
-                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <?php
                             $no = 1;
-                            $result = mysqli_query($mysqli, "SELECT tb_transaksi.*, tb_customer.nama FROM tb_transaksi INNER JOIN tb_customer ON tb_transaksi.id_customer = tb_customer.id ORDER BY tb_transaksi.id DESC");
+                            $query = "SELECT p.no_faktur, p.tanggal_penjualan, c.nama_customer, p.total_bayar, p.metode
+                                      FROM tb_penjualan p
+                                      JOIN tb_customer c ON p.id_customer = c.id_customer";
 
-                            if (mysqli_num_rows($result) > 0) {
-                                while ($data = mysqli_fetch_array($result)) {
+                            $result = mysqli_query($mysqli, $query);
+
+                            if ($result && mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
                                     ?>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <?= $no++ ?>
-                                            </td>
-                                            <td>
-                                                <?= $data['no_transaksi'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $data['nama'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $data['tanggal_transaksi'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $data['total_pembayaran'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $data['metode_pembayaran'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $data['status_transaksi'] ?>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-success"
-                                                    href='transaksi/update.php?id=<?= $data['id'] ?>&page=transaksi'>Edit</a>
-                                                <a class="btn btn-danger" onclick='return confirmDelete()'
-                                                    href='transaksi/delete.php?id=<?= $data['id'] ?>&page=transaksi'>Hapus</a>
-                                                <a class="btn btn-primary"
-                                                    href='transaksi/detail.php?id=<?= $data['id'] ?>&page=transaksi'>Detail</a>
-                                            </td>
-                                        </tr>
-                                    <tbody>
-                                    <?php }
+                                    <tr>
+                                        <td>
+                                            <?php echo $row['no_faktur']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $row['tanggal_penjualan']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $row['nama_customer']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $row['total_bayar']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $row['metode']; ?>
+                                        </td>
+                                        <td><!-- Tambahkan aksi sesuai kebutuhan --></td>
+                                    </tr>
+                                    <?php
+                                }
                             } else {
                                 ?>
-                                <tr>
-                                    <td colspan="8">Tidak ada data transaksi</td>
-                                </tr>
-                                <?php } ?>
+                            <tr>
+                                <td colspan="6">Tidak ada data transaksi</td>
+                            </tr>
+                            <?php
+                            }
+                            ?>
                         </table>
-
-
                     </div>
                 </div>
             </div>

@@ -6,75 +6,47 @@ error_reporting(E_ALL);
 include("../../config/config.php");
 include('session.php');
 
-if (isset($_POST['submit'])) {
-    // Mengambil nilai dari form
-    $no_transaksi = $_POST['no_transaksi'];
-    $id_customer = $_POST['id_customer'];
-    $tanggal_transaksi = $_POST['tanggal_transaksi'];
-    $metode_pembayaran = $_POST['metode_pembayaran'];
-    $status_transaksi = $_POST['status_transaksi'];
-    //$total_harga = $_POST['total_pembayaran'];
-
-    // Query INSERT
-    $query_insert = "INSERT INTO tb_transaksi (no_transaksi, id_customer, tanggal_transaksi, metode_pembayaran,
-status_transaksi) VALUES ('$no_transaksi', '$id_customer', '$tanggal_transaksi', '$metode_pembayaran',
-'$status_transaksi')";
-
-    // Melakukan operasi INSERT
-    if (mysqli_query($mysqli, $query_insert)) {
-        echo "Data transaksi berhasil disimpan.";
-    } else {
-        echo "Error: " . mysqli_error($mysqli);
-    }
-
-
-    $produk = $_POST['produk'];
-
-    echo "Nomor Transaksi: " . $no_transaksi . "<br>";
-    echo "Tanggal Transaksi: " . $tanggal_transaksi . "<br>";
-    echo "Produk: " . implode(", ", $produk) . "<br>";
-    echo "Id Customer: " . $id_customer . "<br>";
-    echo "Metode Pembayaran: " . $metode_pembayaran . "<br>";
-    echo "Status Transaksi: " . $status_transaksi . "<br>"; ///
+// Inisialisasi keranjang belanja menggunakan session
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
 }
 
+// Dapatkan keranjang belanja dari session
+$cart = $_SESSION['cart'];
 
-$query_last_transaksi = "SELECT no_transaksi FROM tb_transaksi ORDER BY id DESC LIMIT 1";
-$result_last_transaksi = mysqli_query($mysqli, $query_last_transaksi);
+// Proses penambahan produk ke keranjang belanja
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['id_produk']) && isset($_POST['jumlah_beli'])) {
+        $product_id = $_POST['id_produk'];
+        $jumlah_beli = $_POST['jumlah_beli'];
 
-if ($result_last_transaksi === false) {
-    echo "Error: " . mysqli_error($mysqli);
-} else {
-    if (mysqli_num_rows($result_last_transaksi) > 0) {
-        $row_last_transaksi = mysqli_fetch_assoc($result_last_transaksi);
-        $last_transaksi_number = $row_last_transaksi['no_transaksi'];
-        $last_number = (int) substr($last_transaksi_number, 4);
-        $next_number = $last_number + 1;
-        $next_transaksi_number = 'trx-' . sprintf('%04d', $next_number);
-    } else {
-        $next_transaksi_number = 'trx-0001';
+        // Dapatkan data produk berdasarkan ID
+        $query = "SELECT * FROM tb_produk WHERE id = $product_id";
+        $result = mysqli_query($mysqli, $query);
+        $product = mysqli_fetch_assoc($result);
+
+        // Tambahkan produk ke dalam keranjang belanja
+        $cartItem = [
+            'id' => $product_id,
+            'nama_produk' => $product['nama_produk'],
+            'jumlah_beli' => $jumlah_beli,
+            'harga' => $product['harga'],
+        ];
+
+        array_push($cart, $cartItem);
+
+        // Simpan kembali keranjang belanja ke dalam session
+        $_SESSION['cart'] = $cart;
     }
 }
 
-
+// Hitung total pembelian
+$total_pembelian = 0;
+foreach ($cart as $item) {
+    $subtotal = $item['jumlah_beli'] * $item['harga'];
+    $total_pembelian += $subtotal;
+}
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Panel</title>
-
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
-</head>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -95,239 +67,196 @@ if ($result_last_transaksi === false) {
 
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-        <?php include('../halaman/navbar.php'); ?>
-        <?php include('../halaman/sidebar.php'); ?>
+        <!--start navbar sidebar-->
+        <?php include('../halaman/navbar.php');
+        include('../halaman/sidebar.php');
+        ?>
         <div class="content-wrapper">
-            <?php include('content-header.php'); ?>
-            <div class="content">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Tambah Penjualan</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Tambah Penjualan</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <section class="content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
+                        <div class="col-md-4">
+                            <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Data Transaksi</h3>
-                                    <div class="card-tools">
-                                        <a href="../dashboard.php?page=transaksi" class="btn btn-info">Kembali</a>
-                                    </div>
+                                    <h3 class="card-title">Form Penjualan</h3>
                                 </div>
-                                <form method="POST">
-
+                                <!-- /.card-header -->
+                                <!-- form start -->
+                                <form role="form" method="POST" action="">
                                     <div class="card-body">
 
-                                        <div class="form-group" style="display: none;">
-                                            <label for="no_transaksi">Nomor Transaksi:</label>
-                                            <input type="text" class="form-control" id="no_transaksi"
-                                                name="no_transaksi" value="<?php echo $next_transaksi_number; ?>"
-                                                readonly>
+                                        <div class="form-group">
+                                            <label for="product">Produk</label>
+                                            <select class="form-control" id="product" name="id_produk">
+                                                <?php
+                                                $query_produk = "SELECT * FROM tb_produk";
+                                                $result_produk = mysqli_query($mysqli, $query_produk);
+                                                while ($row_produk = mysqli_fetch_assoc($result_produk)) {
+                                                    echo '<option value="' . $row_produk['id'] . '">' . $row_produk['nama_produk'] . '</option>';
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
-                                        <div class="form-group" style="display: none;">
-                                            <label for="tanggal_transaksi">Tanggal Transaksi:</label>
-                                            <?php
-                                            $currentDateTime = date('Y-m-d H:i:s');
-                                            $currentDate = date('Y-m-d');
-                                            $currentTime = date('H:i:s');
-                                            ?>
-                                            <input type="text" class="form-control" id="tanggal_transaksi"
-                                                name="tanggal_transaksi"
-                                                value="<?php echo $currentDate . ' ' . $currentTime; ?>" readonly>
+                                        <div class="form-group">
+                                            <label for="jumlah_beli">Jumlah Beli</label>
+                                            <input type="number" class="form-control" id="jumlah_beli"
+                                                name="jumlah_beli" value="1" min="1">
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="card">
-                                                    <div class="card-header">
-
-                                                        <div class="form-group">
-                                                            <label for="pilih_produk">Pilih Produk</label>
-                                                            <div class="input-group">
-                                                                <input type="search" id="searchInput"
-                                                                    class="form-control form-control-sm"
-                                                                    placeholder="Ketik Nama Produk yang ingin dibeli."
-                                                                    aria-controls="example2">
-                                                                <div class="input-group-append">
-                                                                    <button id="searchButton"
-                                                                        class="btn btn-primary btn-sm"
-                                                                        type="button">Cari</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <table id="example2"
-                                                                class="table table-bordered table-hover">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Nama Produk</th>
-                                                                        <th>Harga</th>
-                                                                        <th>Stok</th>
-                                                                        <th>Tambah</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <?php
-                                                                    // Kode untuk mengambil data produk dari database
-                                                                    $query_produk = "SELECT * FROM tb_produk";
-                                                                    $result_produk = mysqli_query($mysqli, $query_produk);
-                                                                    $count = 0;
-
-                                                                    // Mengisi tabel dengan data produk
-                                                                    while ($row_produk = mysqli_fetch_assoc($result_produk)) {
-                                                                        echo '<tr>';
-                                                                        echo '<td>' . $row_produk['nama_produk'] . '</td>';
-                                                                        echo '<td>Rp ' . $row_produk['harga'] . '</td>';
-                                                                        echo '<td>' . $row_produk['stok'] . '</td>';
-                                                                        echo '<td>';
-                                                                        echo '<button class="btn btn-primary btn-pilih" data-id="' . $row_produk['id'] . '">Pilih</button>';
-                                                                        echo '</td>';
-                                                                        echo '</tr>';
-                                                                        $count++;
-                                                                    }
-                                                                    ?>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="card">
-
-                                                    <div class="card-header">
-                                                        <div class="form-group">
-                                                            <label for="id_customer">Nama Customer:</label>
-                                                            <select class="form-control" id="id_customer"
-                                                                name="id_customer">
-                                                                <?php
-                                                                // Kode untuk mengambil data customer dari database
-                                                                $query_customer = "SELECT * FROM tb_customer";
-                                                                $result_customer = mysqli_query($mysqli, $query_customer);
-
-                                                                // Mengisi dropdown dengan data customer
-                                                                while ($row_customer = mysqli_fetch_assoc($result_customer)) {
-                                                                    echo '<option value="' . $row_customer['id'] . '">' . $row_customer['nama'] . '</option>';
-                                                                }
-                                                                ?>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="metode_pembayaran">Metode
-                                                                Pembayaran:</label>
-                                                            <select class="form-control" id="metode_pembayaran"
-                                                                name="metode_pembayaran">
-                                                                <option value="Cash">Cash</option>
-                                                                <option value="Transfer">Transfer</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="status_transaksi">Status
-                                                                Transaksi:</label>
-                                                            <select class="form-control" id="status_transaksi"
-                                                                name="status_transaksi">
-                                                                <option value="Lunas">Lunas</option>
-                                                                <option value="Belum Lunas">Belum Lunas</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Tambah Produk</button>
                                         </div>
                                     </div>
-
-                                    <div class="card-header">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                Keranjang Belanja
-                                            </div>
-                                            <div class="card-body">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nama Produk</th>
-                                                            <th>Harga</th>
-                                                            <th>Jumlah</th>
-                                                            <th>Subtotal</th>
-                                                            <th>Aksi</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php
-                                                        // Cek apakah keranjang belanja sudah ada di session
-                                                        if (isset($_SESSION['keranjang'])) {
-                                                            // Looping setiap produk di keranjang belanja
-                                                            foreach ($_SESSION['keranjang'] as $idProduk => $jumlahBeli) {
-                                                                // Kode untuk mengambil data produk dari database berdasarkan ID produk
-                                                                $query_produk = "SELECT * FROM tb_produk WHERE id = $idProduk";
-                                                                $result_produk = mysqli_query($mysqli, $query_produk);
-                                                                $row_produk = mysqli_fetch_assoc($result_produk);
-                                                                $namaProduk = $row_produk['nama_produk'];
-                                                                $hargaProduk = $row_produk['harga'];
-
-                                                                // Hitung subtotal harga produk
-                                                                $subtotalHarga = $hargaProduk * $jumlahBeli;
-                                                                ?>
-                                                                <tr>
-                                                                    <td>
-                                                                        <?php echo $namaProduk; ?>
-                                                                    </td>
-                                                                    <td>Rp
-                                                                        <?php echo $hargaProduk; ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number"
-                                                                            name="jumlah_produk[<?php echo $idProduk; ?>]"
-                                                                            value="<?php echo $jumlahBeli; ?>">
-                                                                        </input>
-                                                                    </td>
-                                                                    <td>Rp
-                                                                        <?php echo $subtotalHarga; ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <form action="hapus_produk.php" method="post">
-                                                                            <input type="hidden" name="id_produk"
-                                                                                value="<?php echo $idProduk; ?>">
-                                                                            <button type="submit"
-                                                                                class="btn btn-danger btn-sm">Hapus</button>
-                                                                        </form>
-                                                                    </td>
-                                                                </tr>
-                                                                <?php
-                                                            }
-                                                        } else {
-                                                            ?>
-                                                            <tr>
-                                                                <td colspan="5">Keranjang belanja kosong</td>
-                                                            </tr>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td colspan="3" class="text-right">Total Harga:
-                                                            </td>
-                                                            <td colspan="2">Rp
-
-                                                            </td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary" name="submit">Tambah
-                                            Transaksi</button>
-                                    </div>
+                                    <!-- /.card-body -->
                                 </form>
                             </div>
+                            <!-- /.card -->
                         </div>
+                        <!-- /.col-md-6 -->
+                        <div class="col-md-8">
+                            <div class="card card-info">
+                                <div class="card-header">
+                                    <h3 class="card-title">Keranjang Belanja</h3>
+                                    <button class="btn btn-danger btn-sm float-right" onclick="clearCart()">Hapus
+                                        Semua</button>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <?php if (count($cart) === 0): ?>
+                                        <p>Keranjang belanja kosong.</p>
+                                    <?php else: ?>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama Produk</th>
+                                                    <th>Jumlah</th>
+                                                    <th>Harga</th>
+                                                    <th>Subtotal</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="cartTableBody">
+                                                <?php foreach ($cart as $item): ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $item['nama_produk']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo number_format($item['jumlah_beli'], 0, ',', '.'); ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo 'IDR ' . number_format($item['harga'], 2, ',', '.'); ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo 'IDR ' . number_format($item['jumlah_beli'] * $item['harga'], 2, ',', '.'); ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <button class="btn btn-danger btn-sm"
+                                                                onclick="removeCartItem(<?php echo $item['id']; ?>)">
+                                                                Hapus
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="3">Total Pembelian</th>
+                                                    <th>
+                                                        <?php echo 'IDR ' . number_format($total_pembelian, 2, ',', '.'); ?>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="3">Jumlah Bayar</th>
+                                                    <td>
+                                                        <input type="number" class="form-control" id="jumlah_bayar"
+                                                            name="jumlah_bayar" min="0" step="0.01" required>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="3">Kembali</th>
+                                                    <td>
+                                                        <span id="kembali"></span>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+
+
+
+                                        </table>
+                                    <?php endif; ?>
+                                    </br>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group" style="display: none;">
+                                                <label for="no_faktur">No. Faktur</label>
+                                                <input value="<?php echo $next_transaksi_number; ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="metode_pembayaran">Metode Pembayaran</label>
+                                                <select class="form-control" id="metode_pembayaran"
+                                                    name="metode_pembayaran">
+                                                    <option value="transfer">Transfer</option>
+                                                    <option value="manual">Manual</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="customer">Pembeli</label>
+                                                <select class="form-control" id="customer" name="id_customer">
+                                                    <?php
+                                                    $query_customer = "SELECT * FROM tb_customer";
+                                                    $result_customer = mysqli_query($mysqli, $query_customer);
+                                                    while ($row_customer = mysqli_fetch_assoc($result_customer)) {
+                                                        echo '<option value="' . $row_customer['id'] . '">' . $row_customer['nama'] . '</option>';
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <a href="proses_penjualan.php" class="btn btn-success float-right">Proses
+                                        Penjualan</a>
+                                </div>
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col-md-6 -->
                     </div>
+                    <!-- /.row -->
                 </div>
-            </div>
+                <!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
         </div>
+        <!-- /.content-wrapper -->
+
         <?php include('../halaman/footer.php'); ?>
+
     </div>
+    <!-- ./wrapper -->
+
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
@@ -335,29 +264,112 @@ if ($result_last_transaksi === false) {
     <!-- AdminLTE App -->
     <script src="../dist/js/adminlte.min.js"></script>
 
-    <!--Script untuk pencarian-->
     <script>
-        $(document).ready(function () {
-            $('#searchInput').on('input', function () {
-                var searchText = $(this).val().toLowerCase();
-                $('#example2 tbody tr').filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
-                });
+        function removeCartItem(productId) {
+            $.ajax({
+                url: 'hapus_item.php',
+                type: 'POST',
+                data: { id_produk: productId },
+                success: function (response) {
+                    var cartItems = JSON.parse(response);
+                    displayCartItems(cartItems);
+
+                    // Refresh halaman setelah item dihapus
+                    location.reload();
+                },
+                error: function () {
+                    alert('Terjadi kesalahan saat menghapus item dari keranjang belanja.');
+                }
             });
-        });
+        }
+        function clearCart() {
+            // Kirim request AJAX ke server untuk menghapus semua item dari keranjang belanja
+            $.ajax({
+                url: 'hapus_semua_item.php',
+                type: 'POST',
+                success: function (response) {
+                    // Parsing JSON respons dari server
+                    var cartItems = JSON.parse(response);
+
+                    // Tampilkan ulang item-item keranjang belanja
+                    displayCartItems(cartItems);
+
+                    // Refresh halaman setelah menghapus semua item
+                    location.reload();
+                },
+                error: function () {
+                    alert('Terjadi kesalahan saat menghapus semua item dari keranjang belanja.');
+                }
+            });
+        }
+
+        function displayCartItems(cartItems) {
+            // Hapus semua item keranjang belanja dari tampilan
+            var cartTableBody = document.getElementById('cartTableBody');
+            cartTableBody.innerHTML = '';
+
+            // Tambahkan kembali item-item keranjang belanja yang ada
+            for (var i = 0; i < cartItems.length; i++) {
+                var item = cartItems[i];
+
+                // Buat baris tabel untuk item keranjang belanja
+                var row = document.createElement('tr');
+
+                // Tambahkan data produk ke dalam baris tabel
+                var productNameCell = document.createElement('td');
+                productNameCell.textContent = item.nama_produk;
+                row.appendChild(productNameCell);
+
+                var quantityCell = document.createElement('td');
+                quantityCell.textContent = item.jumlah_beli;
+                row.appendChild(quantityCell);
+
+                var priceCell = document.createElement('td');
+                priceCell.textContent = item.harga;
+                row.appendChild(priceCell);
+
+                var subtotalCell = document.createElement('td');
+                subtotalCell.textContent = item.jumlah_beli * item.harga;
+                row.appendChild(subtotalCell);
+
+                // Tambahkan tombol "Hapus" ke dalam baris tabel
+                var deleteButtonCell = document.createElement('td');
+                var deleteButton = document.createElement('button');
+                deleteButton.className = 'btn btn-danger btn-sm';
+                deleteButton.textContent = 'Hapus';
+                deleteButton.addEventListener('click', function () {
+                    removeCartItem(item.id);
+                });
+                deleteButtonCell.appendChild(deleteButton);
+                row.appendChild(deleteButtonCell);
+
+                // Tambahkan baris tabel ke dalam tabel keranjang belanja
+                cartTableBody.appendChild(row);
+            }
+        }
+
+        // Fungsi untuk menghitung kembaliannya
+        function hitungKembali() {
+            var totalPembelian = <?php echo $total_pembelian; ?>;
+            var jumlahBayar = parseFloat(document.getElementById('jumlah_bayar').value);
+            var kembali = jumlahBayar - totalPembelian;
+
+            // Tampilkan kembaliannya
+            document.getElementById('kembali').textContent = formatCurrency(kembali);
+        }
+
+        // Panggil fungsi hitungKembali() ketika jumlah bayar berubah
+        document.getElementById('jumlah_bayar').addEventListener('input', hitungKembali);
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(amount);
+        }
+
     </script>
+
+
+
+
 </body>
-
-</html>
-
-
-<!-- ./wrapper -->
-<!-- jQuery -->
-<script src="../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
-
 
 </html>
