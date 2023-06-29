@@ -71,9 +71,9 @@ include_once("../config/config.php");
                                     <?php }
                             } else {
                                 ?>
-                                    <tr>
-                                        <td colspan="8">Tidak ada data transaksi</td>
-                                    </tr>
+                                <tr>
+                                    <td colspan="8">Tidak ada data transaksi</td>
+                                </tr>
                                 <?php } ?>
                         </table>
 
