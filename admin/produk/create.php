@@ -69,8 +69,7 @@ if (isset($_POST['tambah'])) {
     <title>PANEL ADMIN</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
@@ -95,8 +94,7 @@ if (isset($_POST['tambah'])) {
                                 <div class="card-header">
                                     <h3 class="card-title">Data Produk</h3>
                                     <div class="card-tools">
-                                        <a href="<?= $base_url_admin ?>/dashboard.php?page=produk"
-                                            class="btn btn-info">Kembali</a>
+                                        <a href="<?= $base_url_admin ?>/dashboard.php?page=produk" class="btn btn-info">Kembali</a>
                                     </div>
                                 </div>
 
@@ -104,14 +102,12 @@ if (isset($_POST['tambah'])) {
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="nama_produk">Nama Produk</label>
-                                            <input type="text" class="form-control" name="nama_produk" required
-                                                autofocus>
+                                            <input type="text" class="form-control" name="nama_produk" required autofocus>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="deskripsi">Deskripsi</label>
-                                            <textarea type="text" class="form-control" name="deskripsi"
-                                                required></textarea>
+                                            <textarea type="text" class="form-control" name="deskripsi" required></textarea>
                                         </div>
 
                                         <div class="form-group">

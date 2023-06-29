@@ -13,7 +13,18 @@ $row_produk = mysqli_fetch_assoc($produk);
 
 $users = mysqli_query($mysqli, 'SELECT COUNT(*) AS jml FROM tb_users');
 $row_users = mysqli_fetch_assoc($users);
+
+$customer = mysqli_query($mysqli, 'SELECT COUNT(*) AS jml FROM tb_customer');
+$row_customer = mysqli_fetch_assoc($customer);
+
+$produk = mysqli_query($mysqli, 'SELECT COUNT(*) AS jml FROM tb_produk');
+$row_produk = mysqli_fetch_assoc($produk);
+
+$transaksi = mysqli_query($mysqli, 'SELECT COUNT(*) AS jml FROM tb_transaksi');
+$row_transaksi = mysqli_fetch_assoc($transaksi);
 ?>
+
+
 
 <div class="content">
     <div class="container-fluid">
@@ -29,8 +40,23 @@ $row_users = mysqli_fetch_assoc($users);
                     <div class="icon">
                         <i class="ion ion-person"></i>
                     </div>
-                    <a href="<?= $base_url ?>/dashboard.php?page=users" class="small-box-footer">Selengkapnya <i
-                            class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= $base_url ?>/dashboard.php?page=users" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>
+                            <?= $row_customer['jml'] ?>
+                        </h3>
+                        <p>Customer</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <a href="<?= $base_url ?>/dashboard.php?page=customer" class="small-box-footer">Selengkapnya
+                        <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -45,13 +71,12 @@ $row_users = mysqli_fetch_assoc($users);
                     <div class="icon">
                         <i class="fas fa-pen"></i>
                     </div>
-                    <a href="<?= $base_url ?>/dashboard.php?page=produk" class="small-box-footer">Selengkapnya <i
-                            class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= $base_url ?>/dashboard.php?page=produk" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
             <div class="col-lg-3 col-6">
-                <div class="small-box bg-warning">
+                <div class="small-box bg-primary">
                     <div class="inner">
                         <h3>
                             <?= $row_kategori['jml'] ?>
@@ -62,6 +87,38 @@ $row_users = mysqli_fetch_assoc($users);
                         <i class="fas fa-tags"></i>
                     </div>
                     <a href="<?= $base_url ?>/dashboard.php?page=kategori_produk" class="small-box-footer">Selengkapnya
+                        <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>
+                            <?= $row_produk['jml'] ?>
+                        </h3>
+                        <p>Data Produk</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <a href="<?= $base_url ?>/dashboard.php?page=produk" class="small-box-footer">Selengkapnya
+                        <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-secondary">
+                    <div class="inner">
+                        <h3>
+                            <?= $row_transaksi['jml'] ?>
+                        </h3>
+                        <p>Data Transaksi</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <a href="<?= $base_url ?>/dashboard.php?page=transaksi" class="small-box-footer">Selengkapnya
                         <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>

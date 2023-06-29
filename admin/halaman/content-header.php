@@ -23,6 +23,24 @@
                 case 'transaksi':
                     include "transaksi/content-header.php";
                     break;
+                case 'profil_toko':
+                    include "profil_toko/content-header.php";
+                    break;
+                case 'gallery':
+                    include "gallery/content-header.php";
+                    break;
+                case 'about':
+                    include "about/content-header.php";
+                    break;
+                case 'kategori_artikel':
+                    include "kategori_artikel/content-header.php";
+                    break;
+                case 'artikel':
+                    include "artikel/content-header.php";
+                    break;
+                case 'grafik':
+                    include "grafik/content-header.php";
+                    break;
                 default:
                     echo "<center><h3>Maaf. Halaman tidak ditemukan!</h3></center>";
                     break;

@@ -31,8 +31,7 @@ if (isset($_POST['submit'])) {
     <title>PANEL ADMIN</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
@@ -56,8 +55,7 @@ if (isset($_POST['submit'])) {
                                 <div class="card-header">
                                     <h3 class="card-title">Data Customer</h3>
                                     <div class="card-tools">
-                                        <a href="../../admin/dashboard.php?page=customer"
-                                            class="btn btn-info">Kembali</a>
+                                        <a href="../../admin/dashboard.php?page=customer" class="btn btn-info">Kembali</a>
                                     </div>
                                 </div>
 
