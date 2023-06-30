@@ -20,7 +20,7 @@ $row_customer = mysqli_fetch_assoc($customer);
 $produk = mysqli_query($mysqli, 'SELECT COUNT(*) AS jml FROM tb_produk');
 $row_produk = mysqli_fetch_assoc($produk);
 
-$transaksi = mysqli_query($mysqli, 'SELECT COUNT(*) AS jml FROM tb_transaksi');
+$transaksi = mysqli_query($mysqli, 'SELECT COUNT(*) AS jml FROM tb_penjualan');
 $row_transaksi = mysqli_fetch_assoc($transaksi);
 ?>
 
@@ -40,7 +40,8 @@ $row_transaksi = mysqli_fetch_assoc($transaksi);
                     <div class="icon">
                         <i class="ion ion-person"></i>
                     </div>
-                    <a href="<?= $base_url ?>/dashboard.php?page=users" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= $base_url ?>/dashboard.php?page=users" class="small-box-footer">Selengkapnya <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -71,7 +72,8 @@ $row_transaksi = mysqli_fetch_assoc($transaksi);
                     <div class="icon">
                         <i class="fas fa-pen"></i>
                     </div>
-                    <a href="<?= $base_url ?>/dashboard.php?page=produk" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= $base_url ?>/dashboard.php?page=produk" class="small-box-footer">Selengkapnya <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -113,7 +115,7 @@ $row_transaksi = mysqli_fetch_assoc($transaksi);
                         <h3>
                             <?= $row_transaksi['jml'] ?>
                         </h3>
-                        <p>Data Transaksi</p>
+                        <p>Data Penjualan</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-bars"></i>

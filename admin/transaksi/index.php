@@ -18,53 +18,72 @@ include_once("../config/config.php");
                         <table width='100%' id='example2' class="table table-bordered table-striped">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>No Faktur</th>
                                     <th>Tanggal Penjualan</th>
-                                    <th>Customer</th>
+                                    <th>Nama Customer</th>
+                                    <th>Produk</th>
                                     <th>Total Bayar</th>
                                     <th>Metode</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <?php
-                            $no = 1;
-                            $query = "SELECT p.no_faktur, p.tanggal_penjualan, c.nama_customer, p.total_bayar, p.metode
-                                      FROM tb_penjualan p
-                                      JOIN tb_customer c ON p.id_customer = c.id_customer";
+                            <tbody>
+                                <?php
+                                $no = 1; // Inisialisasi variabel nomor
+                                $query = "SELECT p.id_penjualan, p.no_faktur, p.tanggal_penjualan, c.nama, pr.nama_produk, p.total_harga, p.metode_pembayaran
+              FROM tb_penjualan p
+              JOIN tb_customer c ON p.id_customer = c.id
+              JOIN tb_detail_penjualan dp ON p.no_faktur = dp.no_faktur
+              JOIN tb_produk pr ON dp.id_produk = pr.id";
+                                $result = mysqli_query($mysqli, $query);
 
-                            $result = mysqli_query($mysqli, $query);
+                                if ($result && mysqli_num_rows($result) > 0) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        ?>
 
-                            if ($result && mysqli_num_rows($result) > 0) {
-                                while ($row = mysqli_fetch_assoc($result)) {
+                                        <tr>
+                                            <td>
+                                                <?php echo $no; ?> <!-- Menampilkan nomor -->
+                                            </td>
+                                            <td>
+                                                <?php echo $row['no_faktur']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['tanggal_penjualan']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['nama']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['nama_produk']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo 'IDR ' . number_format($row['total_harga'], 2, ',', '.'); ?>
+                                            </td>
+
+                                            <td>
+                                                <?php echo $row['metode_pembayaran']; ?>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-danger" onclick='return confirmDelete()'
+                                                    href='transaksi/delete.php?no_faktur=<?= $row['no_faktur'] ?>&page=transaksi'>Hapus</a>
+
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        $no++;
+                                    }
+                                } else {
                                     ?>
-                                    <tr>
-                                        <td>
-                                            <?php echo $row['no_faktur']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row['tanggal_penjualan']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row['nama_customer']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row['total_bayar']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row['metode']; ?>
-                                        </td>
-                                        <td><!-- Tambahkan aksi sesuai kebutuhan --></td>
-                                    </tr>
-                                    <?php
+                                <tr>
+                                    <td colspan="7">Tidak ada data transaksi</td>
+                                </tr>
+                                <?php
                                 }
-                            } else {
                                 ?>
-                            <tr>
-                                <td colspan="6">Tidak ada data transaksi</td>
-                            </tr>
-                            <?php
-                            }
-                            ?>
+                            </tbody>
+
                         </table>
                     </div>
                 </div>
