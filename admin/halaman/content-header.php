@@ -38,8 +38,8 @@
                 case 'artikel':
                     include "artikel/content-header.php";
                     break;
-                case 'grafik':
-                    include "grafik/content-header.php";
+                case 'setting':
+                    include "setting/content-header.php";
                     break;
                 default:
                     echo "<center><h3>Maaf. Halaman tidak ditemukan!</h3></center>";

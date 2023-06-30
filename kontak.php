@@ -82,5 +82,9 @@
             <div class="text-center"><button type="submit">Send Message</button></div>
         </form><!--End Contact Form -->
 
+
+
+        <!-- Add the following PHP code to process the form submission -->
+
     </div>
 </section><!-- End Contact Section -->

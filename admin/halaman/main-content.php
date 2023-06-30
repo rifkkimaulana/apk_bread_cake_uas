@@ -37,8 +37,8 @@
                 case 'artikel':
                     include "artikel/index.php";
                     break;
-                case 'grafik':
-                    include "grafik/index.php";
+                case 'setting':
+                    include "setting/index.php";
                     break;
                 default:
                     echo "<center><h3>Maaf. Halaman tidak ditemukan!</h3></center>";

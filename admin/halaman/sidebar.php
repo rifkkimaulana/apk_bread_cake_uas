@@ -119,10 +119,10 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=grafik"
+                            <a href="<?= $base_url ?>/dashboard.php?page=setting"
                                 class="nav-link <?php echo ($page == 'grafik') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Grafik</p>
+                                <p>Setting</p>
                             </a>
                         </li>
                     </ul>

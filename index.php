@@ -1,4 +1,9 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include 'config/config.php';
 
 // Query untuk mengambil data testimoni dari database
@@ -68,16 +73,16 @@ $result = $mysqli->query($query);
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Menu</a></li>
-          <li><a href="#">Gallery</a></li>
-          <li><a href="#">Artikel</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="artikel">Artikel</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav><!-- .navbar -->
 
-      <a class="btn-book-a-table" href="">Order</a>
+      <a class="btn-book-a-table" href="#book-a-table">Order</a>
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
 
@@ -97,8 +102,8 @@ $result = $mysqli->query($query);
           </p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
             <a href="#" class="btn-book-a-table">Book a Table</a>
-            <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ"
-              class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch
+            <a href="https://youtu.be/6ClFRiu1Z9k" class="glightbox btn-watch-video d-flex align-items-center"><i
+                class="bi bi-play-circle"></i><span>Watch
                 Video</span></a>
           </div>
         </div>
@@ -196,7 +201,6 @@ $result = $mysqli->query($query);
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
 </body>
 
 </html>

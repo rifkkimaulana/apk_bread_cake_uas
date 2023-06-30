@@ -1,41 +1,22 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
+include_once("../config/config.php");
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+// Ambil data dari formulir
+$nama_lengkap = $_POST['name'];
+$email = $_POST['email'];
+$subject = $_POST['subject'];
+$pesan = $_POST['message'];
+$status = 'belum dibaca'; // Set default status
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
+// Query untuk menyimpan data ke tabel tb_pesan
+$query = "INSERT INTO tb_pesan (nama_lengkap, email, subject, pesan, status) VALUES ('$nama_lengkap', '$email', '$subject', '$pesan', '$status')";
+$result = mysqli_query($mysqli, $query);
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
-
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
-
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
-
-  echo $contact->send();
+if ($result) {
+  // Data berhasil disimpan, arahkan kembali ke halaman utama
+  echo '<script>alert("Pesan berhasil dikirim!"); window.location.href = "../";</script>';
+  exit();
+} else {
+  // Terjadi kesalahan. Tampilkan pesan error atau lakukan tindakan yang sesuai.
+}
 ?>
