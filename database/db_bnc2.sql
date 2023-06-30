@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 29, 2023 at 02:36 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jun 30, 2023 at 06:01 PM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 7.4.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_bnc_uas`
+-- Database: `db_bnc2`
 --
 
 -- --------------------------------------------------------
@@ -31,15 +31,16 @@ CREATE TABLE `tb_about` (
   `id` int(11) NOT NULL,
   `isi1` text NOT NULL,
   `isi2` text NOT NULL,
-  `image` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `image` text NOT NULL,
+  `link_video` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_about`
 --
 
-INSERT INTO `tb_about` (`id`, `isi1`, `isi2`, `image`) VALUES
-(1, 'Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet', 'Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet', 'upload_20230628152059_about-1.jpg');
+INSERT INTO `tb_about` (`id`, `isi1`, `isi2`, `image`, `link_video`) VALUES
+(1, 'Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet', 'Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet', 'upload_20230628152059_about-1.jpg', 'https://youtu.be/6ClFRiu1Z9k');
 
 -- --------------------------------------------------------
 
@@ -56,7 +57,7 @@ CREATE TABLE `tb_artikel` (
   `created_time` datetime NOT NULL,
   `id_kategori` int(11) NOT NULL,
   `slug` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_artikel`
@@ -78,15 +79,36 @@ CREATE TABLE `tb_customer` (
   `telpon` varchar(20) NOT NULL,
   `email` varchar(100) NOT NULL,
   `create_time` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_customer`
 --
 
 INSERT INTO `tb_customer` (`id`, `nama`, `alamat`, `telpon`, `email`, `create_time`) VALUES
-(1, 'Rifki Maulana', 'DUSUN CINAGLANG, RT002/RW002, DESA NEGLASARI, KECAMATAN DARMARAJA', '083130649979', 'rifkkimaulana@gmail.com', '2023-06-19 17:28:01'),
-(2, 'Lasmini / Atharazka 2', 'DUSUN CINAGLANG, RT002/RW002, DESA NEGLASARI, KECAMATAN DARMARAJA', '083103064997', 'cs@imasnet.id', '2023-06-19 17:30:01');
+(3, 'Ivan Gunawan', 'Pasir Koja, RT20/RW13, Dusun xxxx, Kecamatan xxxx', '0812312312312', 'ivan@null.null', '2023-06-30 17:24:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_detail_penjualan`
+--
+
+CREATE TABLE `tb_detail_penjualan` (
+  `no_faktur` varchar(100) NOT NULL,
+  `id_produk` int(11) NOT NULL,
+  `jumlah_terjual` int(11) NOT NULL,
+  `harga_jual` int(11) NOT NULL,
+  `total_harga` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_detail_penjualan`
+--
+
+INSERT INTO `tb_detail_penjualan` (`no_faktur`, `id_produk`, `jumlah_terjual`, `harga_jual`, `total_harga`) VALUES
+('TRX-0001', 3, 2, 21000, 42000),
+('TRX-0002', 6, 2, 30000, 60000);
 
 -- --------------------------------------------------------
 
@@ -96,9 +118,22 @@ INSERT INTO `tb_customer` (`id`, `nama`, `alamat`, `telpon`, `email`, `create_ti
 
 CREATE TABLE `tb_gallery` (
   `id` int(11) NOT NULL,
-  `keterangan` text NOT NULL,
   `image` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_gallery`
+--
+
+INSERT INTO `tb_gallery` (`id`, `image`) VALUES
+(3, 'upload_20230630113850_gallery-1.jpg'),
+(6, 'upload_20230630125032_gallery-2.jpg'),
+(7, 'upload_20230630125038_gallery-3.jpg'),
+(8, 'upload_20230630125043_gallery-4.jpg'),
+(9, 'upload_20230630125049_gallery-5.jpg'),
+(10, 'upload_20230630125055_gallery-6.jpg'),
+(11, 'upload_20230630125100_gallery-7.jpg'),
+(12, 'upload_20230630125105_gallery-8.jpg');
 
 -- --------------------------------------------------------
 
@@ -109,7 +144,7 @@ CREATE TABLE `tb_gallery` (
 CREATE TABLE `tb_kategori_artikel` (
   `id` int(11) NOT NULL,
   `kategori_artikel` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_kategori_artikel`
@@ -128,7 +163,7 @@ INSERT INTO `tb_kategori_artikel` (`id`, `kategori_artikel`) VALUES
 CREATE TABLE `tb_kategori_produk` (
   `id` int(11) NOT NULL,
   `kategori_produk` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_kategori_produk`
@@ -137,6 +172,77 @@ CREATE TABLE `tb_kategori_produk` (
 INSERT INTO `tb_kategori_produk` (`id`, `kategori_produk`) VALUES
 (2, 'Cake'),
 (3, 'bread');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_pembayaran`
+--
+
+CREATE TABLE `tb_pembayaran` (
+  `no_faktur` varchar(100) NOT NULL,
+  `tanggal_pembayaran` date NOT NULL,
+  `jumlah_bayar` int(11) NOT NULL,
+  `metode_pembayaran` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_pembayaran`
+--
+
+INSERT INTO `tb_pembayaran` (`no_faktur`, `tanggal_pembayaran`, `jumlah_bayar`, `metode_pembayaran`) VALUES
+('TRX-0001', '2023-06-30', 50000, 'transfer'),
+('TRX-0002', '2023-06-30', 100000, 'manual');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_penjualan`
+--
+
+CREATE TABLE `tb_penjualan` (
+  `id_penjualan` int(11) NOT NULL,
+  `no_faktur` varchar(100) NOT NULL,
+  `tanggal_penjualan` datetime NOT NULL,
+  `id_customer` int(11) NOT NULL,
+  `total_harga` int(11) NOT NULL,
+  `metode_pembayaran` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_penjualan`
+--
+
+INSERT INTO `tb_penjualan` (`id_penjualan`, `no_faktur`, `tanggal_penjualan`, `id_customer`, `total_harga`, `metode_pembayaran`) VALUES
+(9, 'TRX-0001', '2023-06-30 09:41:13', 1, 42000, 'transfer'),
+(10, 'TRX-0002', '2023-06-30 17:29:48', 3, 60000, 'manual');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_pesan`
+--
+
+CREATE TABLE `tb_pesan` (
+  `id_pesan` int(11) NOT NULL,
+  `nama_lengkap` varchar(50) NOT NULL,
+  `email` varchar(20) NOT NULL,
+  `subject` varchar(50) NOT NULL,
+  `pesan` text NOT NULL,
+  `status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_pesan`
+--
+
+INSERT INTO `tb_pesan` (`id_pesan`, `nama_lengkap`, `email`, `subject`, `pesan`, `status`) VALUES
+(17, 'asdf', 'asdfasdf@fnao.com', 'asd', 'asd', 'belum diba'),
+(18, 'asdf', 'asdfasdf@fnao.com', 'asd', 'asd', 'belum diba'),
+(19, 'Apong Siti Atijah', 'apongsitiatijah@gmai', 'asd', 'asd', 'belum diba'),
+(20, 'Apong Siti Atijah', 'apongsitiatijah@gmai', 'asd', 'asd', 'belum diba'),
+(21, 'Apong Siti Atijah', 'apongsitiatijah@gmai', 'asd', 'asd', 'belum diba'),
+(22, 'asd', 'asdfasdf@fnao.com', 'asd', 'aw32134', 'belum diba');
 
 -- --------------------------------------------------------
 
@@ -152,15 +258,15 @@ CREATE TABLE `tb_produk` (
   `harga` int(11) NOT NULL,
   `stok` int(11) NOT NULL,
   `image` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_produk`
 --
 
 INSERT INTO `tb_produk` (`id`, `nama_produk`, `id_kategori`, `deskripsi`, `harga`, `stok`, `image`) VALUES
-(3, 'Magnam Tiste 33', 2, 'deskripsi: Magnam Tiste 2', 21000, 10, 'upload_20230619161521_menu-item-1.png'),
-(4, 'tesdatapro', 2, 'asdfasdf', 50000, 2, 'upload_20230619213551_logo.png');
+(5, 'Produk 1', 3, 'ini adalah kue ter enak sedunia', 20000, 10, 'upload_20230630172844_1.jpg'),
+(6, 'Kue Kue', 2, 'ini adlaah kue terenak sekabupaten', 30000, 2, 'upload_20230630172917_2.jpg');
 
 -- --------------------------------------------------------
 
@@ -174,7 +280,7 @@ CREATE TABLE `tb_profil` (
   `deskripsi` text NOT NULL,
   `pekerjaan` varchar(50) NOT NULL,
   `image` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_profil`
@@ -186,42 +292,24 @@ INSERT INTO `tb_profil` (`id`, `nama`, `deskripsi`, `pekerjaan`, `image`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_transaksi`
+-- Table structure for table `tb_setting`
 --
 
-CREATE TABLE `tb_transaksi` (
+CREATE TABLE `tb_setting` (
   `id` int(11) NOT NULL,
-  `no_transaksi` varchar(50) NOT NULL,
-  `id_customer` int(11) NOT NULL,
-  `tanggal_transaksi` datetime NOT NULL,
-  `total_pembayaran` int(11) NOT NULL,
-  `metode_pembayaran` varchar(20) NOT NULL,
-  `status_transaksi` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tb_transaksi`
---
-
-INSERT INTO `tb_transaksi` (`id`, `no_transaksi`, `id_customer`, `tanggal_transaksi`, `total_pembayaran`, `metode_pembayaran`, `status_transaksi`) VALUES
-(33, 'trx-0007', 1, '2023-06-19 23:37:40', 0, 'Cash', 'Lunas'),
-(34, 'trx-0007', 1, '2023-06-19 23:37:40', 0, 'Cash', 'Lunas'),
-(35, 'trx-0008', 1, '2023-06-19 23:42:23', 0, 'Cash', 'Lunas');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tb_transaksi_detail`
---
-
-CREATE TABLE `tb_transaksi_detail` (
-  `id` int(11) NOT NULL,
-  `id_transaksi` int(11) NOT NULL,
-  `id_produk` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL,
-  `harga` int(11) NOT NULL,
-  `subtotal` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `nama_aplikasi` varchar(50) NOT NULL,
+  `alamat1` varchar(100) NOT NULL,
+  `alamat2` varchar(100) NOT NULL,
+  `telpon` int(11) NOT NULL,
+  `email` text NOT NULL,
+  `open_operasional` varchar(100) NOT NULL,
+  `close_operasional` varchar(100) NOT NULL,
+  `link_twetter` text NOT NULL,
+  `link_facebook` text NOT NULL,
+  `link_instagram` text NOT NULL,
+  `link_linkedin` text NOT NULL,
+  `link_alamat` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -235,14 +323,14 @@ CREATE TABLE `tb_users` (
   `username` varchar(20) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_users`
 --
 
 INSERT INTO `tb_users` (`id`, `nama_operator`, `username`, `password`, `email`) VALUES
-(4, 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'rifkkimaulana@gmail.com'),
+(4, 'David Setiadi', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'xxx@unsap.ac.id'),
 (5, 'riska', 'admin', '25d55ad283aa400af464c76d713c07ad', 'riskarismaya028@gmail.com');
 
 --
@@ -268,6 +356,12 @@ ALTER TABLE `tb_customer`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tb_detail_penjualan`
+--
+ALTER TABLE `tb_detail_penjualan`
+  ADD PRIMARY KEY (`no_faktur`);
+
+--
 -- Indexes for table `tb_gallery`
 --
 ALTER TABLE `tb_gallery`
@@ -286,6 +380,25 @@ ALTER TABLE `tb_kategori_produk`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tb_pembayaran`
+--
+ALTER TABLE `tb_pembayaran`
+  ADD PRIMARY KEY (`no_faktur`);
+
+--
+-- Indexes for table `tb_penjualan`
+--
+ALTER TABLE `tb_penjualan`
+  ADD PRIMARY KEY (`id_penjualan`),
+  ADD KEY `no_faktur` (`no_faktur`);
+
+--
+-- Indexes for table `tb_pesan`
+--
+ALTER TABLE `tb_pesan`
+  ADD PRIMARY KEY (`id_pesan`);
+
+--
 -- Indexes for table `tb_produk`
 --
 ALTER TABLE `tb_produk`
@@ -295,18 +408,6 @@ ALTER TABLE `tb_produk`
 -- Indexes for table `tb_profil`
 --
 ALTER TABLE `tb_profil`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tb_transaksi`
---
-ALTER TABLE `tb_transaksi`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tb_transaksi_detail`
---
-ALTER TABLE `tb_transaksi_detail`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -335,13 +436,13 @@ ALTER TABLE `tb_artikel`
 -- AUTO_INCREMENT for table `tb_customer`
 --
 ALTER TABLE `tb_customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_gallery`
 --
 ALTER TABLE `tb_gallery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tb_kategori_artikel`
@@ -356,28 +457,28 @@ ALTER TABLE `tb_kategori_produk`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `tb_penjualan`
+--
+ALTER TABLE `tb_penjualan`
+  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `tb_pesan`
+--
+ALTER TABLE `tb_pesan`
+  MODIFY `id_pesan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
 -- AUTO_INCREMENT for table `tb_produk`
 --
 ALTER TABLE `tb_produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_profil`
 --
 ALTER TABLE `tb_profil`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `tb_transaksi`
---
-ALTER TABLE `tb_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
-
---
--- AUTO_INCREMENT for table `tb_transaksi_detail`
---
-ALTER TABLE `tb_transaksi_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tb_users`

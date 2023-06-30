@@ -1,5 +1,5 @@
 <?php
-$base_url = "http://localhost/apk_bread_cake_uas/admin";
+$base_url = "http://breadncake.site/admin";
 $page = isset($_GET['page']) ? $_GET['page'] : '';
 ?>
 
