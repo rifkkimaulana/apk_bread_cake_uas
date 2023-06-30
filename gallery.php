@@ -1,41 +1,53 @@
-<!-- ======= Gallery Section ======= -->
-<section id="gallery" class="gallery section-bg">
-    <div class="container" data-aos="fade-up">
+<?php
+include 'config/config.php';
 
-        <div class="section-header">
-            <h2>gallery</h2>
-            <p>Check <span>Our Gallery</span></p>
-        </div>
+// Query untuk mengambil data gambar dari tb_gallery
+$queryGallery = "SELECT * FROM tb_gallery";
+$resultGallery = $mysqli->query($queryGallery);
 
-        <div class="gallery-slider swiper">
-            <div class="swiper-wrapper align-items-center">
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                        href="assets/img/gallery/gallery-1.jpg"><img src="assets/img/gallery/gallery-1.jpg"
-                            class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                        href="assets/img/gallery/gallery-2.jpg"><img src="assets/img/gallery/gallery-2.jpg"
-                            class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                        href="assets/img/gallery/gallery-3.jpg"><img src="assets/img/gallery/gallery-3.jpg"
-                            class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                        href="assets/img/gallery/gallery-4.jpg"><img src="assets/img/gallery/gallery-4.jpg"
-                            class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                        href="assets/img/gallery/gallery-5.jpg"><img src="assets/img/gallery/gallery-5.jpg"
-                            class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                        href="assets/img/gallery/gallery-6.jpg"><img src="assets/img/gallery/gallery-6.jpg"
-                            class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                        href="assets/img/gallery/gallery-7.jpg"><img src="assets/img/gallery/gallery-7.jpg"
-                            class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                        href="assets/img/gallery/gallery-8.jpg"><img src="assets/img/gallery/gallery-8.jpg"
-                            class="img-fluid" alt=""></a></div>
+// Periksa apakah terdapat setidaknya satu gambar
+if ($resultGallery->num_rows > 0) {
+    ?>
+
+    <!-- ======= Gallery Section ======= -->
+    <section id="gallery" class="gallery section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-header">
+                <h2>Gallery</h2>
+                <p>Check <span>Our Gallery</span></p>
             </div>
-            <div class="swiper-pagination"></div>
+
+            <div class="gallery-slider swiper">
+                <div class="swiper-wrapper align-items-center">
+                    <?php
+                    // Query untuk mengambil data gambar dari tb_gallery dan mengurutkannya berdasarkan ID
+                    $queryGallery = "SELECT * FROM tb_gallery ORDER BY id ASC";
+                    $resultGallery = $mysqli->query($queryGallery);
+
+                    // Periksa apakah ada hasil yang ditemukan
+                    if ($resultGallery->num_rows > 0) {
+                        // Lakukan perulangan untuk setiap hasil yang ditemukan
+                        while ($rowGallery = $resultGallery->fetch_assoc()) {
+                            $image = $rowGallery['image'];
+                            ?>
+                            <div class="swiper-slide">
+                                <a class="glightbox" data-gallery="images-gallery" href="admin/gallery/image/<?php echo $image; ?>">
+                                    <img src="admin/gallery/image/<?php echo $image; ?>" class="img-fluid" alt="">
+                                </a>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+
+
         </div>
 
-    </div>
-</section><!-- End Gallery Section -->
+    </section><!-- End Gallery Section -->
+
+    <?php
+} // Akhir dari if ($resultGallery->num_rows > 0)
+?>

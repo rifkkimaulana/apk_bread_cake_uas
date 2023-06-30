@@ -1,5 +1,8 @@
 <?php
 include_once("../config/config.php");
+
+$result = mysqli_query($mysqli, "SELECT * FROM tb_gallery ORDER BY id DESC");
+$numRows = mysqli_num_rows($result);
 ?>
 
 <div class="content">
@@ -10,7 +13,8 @@ include_once("../config/config.php");
                     <div class="card-header">
                         <h3 class="card-title">Data Gallery</h3>
                         <div class="card-tools">
-                            <a href='gallery/create.php?page=gallery' class="btn btn-info"><i class="fas fa-plus"></i>Tambah Gallery</a>
+                            <a href='gallery/create.php?page=gallery' class="btn btn-info"><i
+                                    class="fas fa-plus"></i>Tambah Gallery</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -18,36 +22,40 @@ include_once("../config/config.php");
                             <thead>
                                 <tr>
                                     <th style="width: 10px">No</th>
-                                    <th>Keterangan</th>
                                     <th class="text-center">Gambar</th>
                                     <th class="text-center">Aksi</th>
                                 </tr>
                             </thead>
-                            <?php
-                            $no = 1;
-                            $result = mysqli_query($mysqli, "SELECT * FROM tb_gallery ORDER BY id DESC");
-                            while ($data = mysqli_fetch_array($result)) {
-                            ?>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <?= $no++ ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['keterangan'] ?>
-                                        </td>
-                                        <td><img src="about/image/<?= $data['image'] ?>" width="100"></td>
-                                        <td class="text-center">
-                                            <a class="btn btn-success" href='gallery/update.php?id=<?= $data['id'] ?>&page=gallery'>Edit</a>
-                                            <a class="btn btn-danger" onclick='return confirmDelete()' href='gallery/delete.php?id=<?= $data['id'] ?>&page=gallery'>Hapus</a>
-                                        </td>
-                                    <?php } ?>
-                                    </td>
-                                    </tr>
-                                </tbody>
-                                <?php ?>
+                            <tbody>
+                                <?php
+                                if ($numRows > 0) {
+                                    $no = 1;
+                                    while ($data = mysqli_fetch_array($result)) {
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?= $no++ ?>
+                                            </td>
+                                            <td class="text-center"><img src="gallery/image/<?= $data['image'] ?>" width="200">
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-success"
+                                                    href='gallery/update.php?id=<?= $data['id'] ?>&page=gallery'>Edit</a>
+                                                <a class="btn btn-danger" onclick='return confirmDelete()'
+                                                    href='gallery/delete.php?id=<?= $data['id'] ?>&page=gallery'>Hapus</a>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='3'>No entries found.</td></tr>";
+                                }
+                                ?>
+                            </tbody>
                         </table>
                     </div>
+                    <?php if ($numRows > 0): ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

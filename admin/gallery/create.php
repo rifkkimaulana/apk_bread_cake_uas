@@ -7,7 +7,6 @@ include("../../config/config.php");
 include('session.php');
 
 if (isset($_POST['tambah'])) {
-    $keterangan = @$_POST['keterangan'];
 
     if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
         $file = $_FILES['gambar'];
@@ -34,8 +33,8 @@ if (isset($_POST['tambah'])) {
 
         if (move_uploaded_file($fileTmpName, $upload)) {
 
-            $result = mysqli_query($mysqli, "INSERT INTO tb_gallery (keterangan, image)
-                VALUES ('$keterangan', '$uploaddb')");
+            $result = mysqli_query($mysqli, "INSERT INTO tb_gallery (image)
+                VALUES ('$uploaddb')");
 
             if ($result) {
                 echo "<script>window.location.href = '../../admin/dashboard.php?page=gallery';</script>";
@@ -65,7 +64,8 @@ if (isset($_POST['tambah'])) {
     <title>PANEL ADMIN</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
@@ -90,17 +90,12 @@ if (isset($_POST['tambah'])) {
                                 <div class="card-header">
                                     <h3 class="card-title">Data Gallery</h3>
                                     <div class="card-tools">
-                                        <a href="<?= $base_url_admin ?>/dashboard.php?page=gallery" class="btn btn-info">Kembali</a>
+                                        <a href="<?= $base_url_admin ?>/dashboard.php?page=gallery"
+                                            class="btn btn-info">Kembali</a>
                                     </div>
                                 </div>
-
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="keterangan">Keterangan</label>
-                                            <input type="text" class="form-control" name="keterangan" required>
-                                        </div>
-
                                         <div class="form-group">
                                             <label for="gambar">Gambar</label>
                                             <input type="file" class="form-control" name="gambar">
