@@ -4,7 +4,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
 ?>
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="<?= $base_url ?>/dashboard.php" class="brand-link">
+    <a href="<?= $base_url ?>/dashboard.php?page=dashboard" class="brand-link">
         <span class="brand-text font-weight-light"><b>ADMIN DASHBOARD</b></span>
     </a>
     <div class="sidebar">
@@ -19,7 +19,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item">
-                    <a href="<?= $base_url ?>/dashboard.php?page=dashboard" class="nav-link <?php echo ($page == 'dashboard') ? 'active' : ''; ?>">
+                    <a href="<?= $base_url ?>/dashboard.php?page=dashboard"
+                        class="nav-link <?php echo ($page == 'dashboard') ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
                             Dashboard
@@ -28,7 +29,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $base_url ?>/dashboard.php?page=users" class="nav-link <?php echo ($page == 'users') ? 'active' : ''; ?>">
+                    <a href="<?= $base_url ?>/dashboard.php?page=users"
+                        class="nav-link <?php echo ($page == 'users') ? 'active' : ''; ?>">
                         <i class="nav-icon fa fa-user"></i>
                         <p>
                             Users
@@ -36,7 +38,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $base_url ?>/dashboard.php?page=customer" class="nav-link <?php echo ($page == 'customer') ? 'active' : ''; ?>">
+                    <a href="<?= $base_url ?>/dashboard.php?page=customer"
+                        class="nav-link <?php echo ($page == 'customer') ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             Customer
@@ -44,7 +47,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $base_url ?>/dashboard.php?page=produk" class="nav-link <?php echo ($page == 'produk') ? 'active' : ''; ?>">
+                    <a href="<?= $base_url ?>/dashboard.php?page=produk"
+                        class="nav-link <?php echo ($page == 'produk') ? 'active' : ''; ?>">
                         <i class="nav-icon fa fa-shopping-cart"></i>
                         <p>
                             Data Produk
@@ -52,7 +56,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $base_url ?>/dashboard.php?page=kategori_produk" class="nav-link <?php echo ($page == 'kategori_produk') ? 'active' : ''; ?>">
+                    <a href="<?= $base_url ?>/dashboard.php?page=kategori_produk"
+                        class="nav-link <?php echo ($page == 'kategori_produk') ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>
                             Kategori Produk
@@ -60,14 +65,16 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $base_url ?>/dashboard.php?page=transaksi" class="nav-link <?php echo ($page == 'transaksi') ? 'active' : ''; ?>">
+                    <a href="<?= $base_url ?>/dashboard.php?page=transaksi"
+                        class="nav-link <?php echo ($page == 'transaksi') ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-money-bill"></i>
                         <p>
                             Data Transaksi
                         </p>
                     </a>
                 </li>
-                <li class="nav-item has-treeview <?php echo ($page == 'profil_toko' || $page == 'about') ? 'menu-open' : ''; ?>">
+                <li
+                    class="nav-item has-treeview <?php echo ($page == 'profil_toko' || $page == 'about') ? 'menu-open' : ''; ?>">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-bars"></i>
                         <p>
@@ -77,37 +84,43 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=profil_toko" class="nav-link <?php echo ($page == 'profil_toko') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=profil_toko"
+                                class="nav-link <?php echo ($page == 'profil_toko') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Profil Toko</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=gallery" class="nav-link <?php echo ($page == 'gallery') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=gallery"
+                                class="nav-link <?php echo ($page == 'gallery') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Gallery</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=about" class="nav-link <?php echo ($page == 'about') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=about"
+                                class="nav-link <?php echo ($page == 'about') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>About</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=kategori_artikel" class="nav-link <?php echo ($page == 'kategori_artikel') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=kategori_artikel"
+                                class="nav-link <?php echo ($page == 'kategori_artikel') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Kategori Artikel</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=artikel" class="nav-link <?php echo ($page == 'artikel') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=artikel"
+                                class="nav-link <?php echo ($page == 'artikel') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Artikel</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= $base_url ?>/dashboard.php?page=grafik" class="nav-link <?php echo ($page == 'grafik') ? 'active' : ''; ?>">
+                            <a href="<?= $base_url ?>/dashboard.php?page=grafik"
+                                class="nav-link <?php echo ($page == 'grafik') ? 'active' : ''; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Grafik</p>
                             </a>
@@ -115,7 +128,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $base_url ?>/logout.php" class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')">
+                    <a href="<?= $base_url ?>/logout.php" class="nav-link"
+                        onclick="return confirm('Apakah Anda yakin ingin keluar?')">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p>
                             Logout
