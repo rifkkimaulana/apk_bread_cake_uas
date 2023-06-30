@@ -28,10 +28,12 @@ if ($resultGallery->num_rows > 0) {
                     // Periksa apakah ada hasil yang ditemukan
                     if ($resultGallery->num_rows > 0) {
                         // Lakukan perulangan untuk setiap hasil yang ditemukan
-                        while ($rowGallery = $resultGallery->fetch_assoc()) {
-                            $image = $rowGallery['image'];
+                        while ($data = $resultGallery->fetch_assoc()) {
+
+                            $image = $data['image'];
                             ?>
                             <div class="swiper-slide">
+
                                 <a class="glightbox" data-gallery="images-gallery" href="admin/gallery/image/<?php echo $image; ?>">
                                     <img src="admin/gallery/image/<?php echo $image; ?>" class="img-fluid" alt="">
                                 </a>
