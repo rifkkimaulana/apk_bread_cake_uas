@@ -31,13 +31,13 @@
   <!-- Template Main CSS File -->
   <link href="../assets/css/main.css" rel="stylesheet">
 
-  <script>
+  <style>
     .article img {
-      width: 100 %;
-      max - height: 200px;
-      object - fit: cover;
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
     }
-  </script>
+  </style>
 
   <!-- =======================================================
   * Template Name: Yummy
@@ -98,49 +98,54 @@
     <section class="sample-page">
       <div class="container" data-aos="fade-up">
 
-        <?php
-        // Query untuk mendapatkan data artikel
-        $query = "SELECT a.*, k.kategori_artikel
-              FROM tb_artikel a
-              INNER JOIN tb_kategori_artikel k ON a.id_kategori = k.id
-              ORDER BY a.created_time DESC";
-
-        $result = mysqli_query($mysqli, $query);
-
-        // Loop melalui setiap artikel
-        while ($row = mysqli_fetch_assoc($result)) {
-          $id = $row['id'];
-          $judul = $row['judul_artikel'];
-          $konten = $row['content_artikel'];
-          $kategori = $row['kategori_artikel'];
-          $cover = $row['cover'];
-          $created_time = $row['created_time'];
-          $slug = $row['slug'];
-          ?>
-
-          <div class="article">
-            <h2>
-              <?php echo $judul; ?>
-            </h2>
-            <div class="article-meta">
-              <span class="category">
-                <?php echo 'Kategori: ', $kategori; ?>
-              </span></br>
-              <span class="date">
-                <?php echo 'Diposting pada: ', $created_time; ?>
-              </span>
-            </div>
-            <img src="../admin/artikel/image/<?php echo $cover; ?>" alt="Cover Image" class="article-image">
-
-            <p>
-              <?php echo $konten; ?>
-            </p>
-            <a href="article.php?slug=<?php echo $slug; ?>">Read More</a>
-          </div>
-
+        <div class="row">
           <?php
-        }
-        ?>
+          // Query untuk mendapatkan data artikel
+          $query = "SELECT a.*, k.kategori_artikel
+                    FROM tb_artikel a
+                    INNER JOIN tb_kategori_artikel k ON a.id_kategori = k.id
+                    ORDER BY a.created_time DESC";
+
+          $result = mysqli_query($mysqli, $query);
+
+          // Loop melalui setiap artikel
+          while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['id'];
+            $judul = $row['judul_artikel'];
+            $konten = $row['content_artikel'];
+            $kategori = $row['kategori_artikel'];
+            $cover = $row['cover'];
+            $created_time = $row['created_time'];
+            $slug = $row['slug'];
+            ?>
+
+            <div class="col-lg-6">
+              <div class="card mb-4">
+                <img src="../admin/artikel/image/<?php echo $cover; ?>" class="card-img-top" alt="Cover Image">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <?php echo $judul; ?>
+                  </h5>
+                  <p class="card-text">
+                    <?php echo substr($konten, 0, 150) . '...'; ?>
+                  </p>
+                  <a href="artikel.php?id=<?php echo $id; ?>" class="btn btn-primary">Read More</a>
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">
+                    <?php echo 'Kategori: ', $kategori; ?>
+                  </small><br>
+                  <small class="text-muted">
+                    <?php echo 'Diposting pada: ', $created_time; ?>
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <?php
+          }
+          ?>
+        </div>
 
       </div>
     </section>

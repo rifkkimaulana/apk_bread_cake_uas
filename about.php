@@ -15,7 +15,14 @@ include 'config/config.php';
                 data-aos="fade-up" data-aos-delay="150">
                 <div class="call-us position-absolute">
                     <h4>Book a Table</h4>
-                    <p>customer@breadcake.unsap.link</p>
+                    <p>
+                        <?php
+                        $setting = mysqli_query($mysqli, "SELECT * FROM tb_setting WHERE id='1'");
+                        $data = mysqli_fetch_array($setting);
+                        $email = $data['email'];
+                        echo $email;
+                        ?>
+                    </p>
                 </div>
             </div>
             <div class="col-lg-5 d-flex align-items-end" data-aos="fade-up" data-aos-delay="300">

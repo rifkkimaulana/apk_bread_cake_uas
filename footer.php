@@ -1,6 +1,5 @@
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
-
     <div class="container">
         <div class="row gy-3">
             <div class="col-lg-3 col-md-6 d-flex">
@@ -8,11 +7,16 @@
                 <div>
                     <h4>Address</h4>
                     <p>
-                        A108 Adam Street <br>
-                        New York, NY 535022 - US<br>
+                        <?php
+                        $setting = mysqli_query($mysqli, "SELECT * FROM tb_setting WHERE id='1'");
+                        $data = mysqli_fetch_array($setting);
+                        $alamat1 = $data['alamat1'];
+                        $alamat2 = $data['alamat2'];
+                        echo $alamat1 . "<br>";
+                        echo $alamat2 . "<br>";
+                        ?>
                     </p>
                 </div>
-
             </div>
 
             <div class="col-lg-3 col-md-6 footer-links d-flex">
@@ -20,8 +24,10 @@
                 <div>
                     <h4>Reservations</h4>
                     <p>
-                        <strong>Phone:</strong> +1 5589 55488 55<br>
-                        <strong>Email:</strong> info@example.com<br>
+                        <strong>Phone:</strong>
+                        <?php echo $data['telpon']; ?><br>
+                        <strong>Email:</strong>
+                        <?php echo $data['email']; ?><br>
                     </p>
                 </div>
             </div>
@@ -31,8 +37,11 @@
                 <div>
                     <h4>Opening Hours</h4>
                     <p>
-                        <strong>Mon-Sat: 11AM</strong> - 23PM<br>
-                        Sunday: Closed
+                        <strong>
+                            <?php echo $data['open_operasional']; ?>
+                        </strong> </br>
+                        <?php echo $data['close_operasional']; ?><br>
+
                     </p>
                 </div>
             </div>
@@ -40,28 +49,23 @@
             <div class="col-lg-3 col-md-6 footer-links">
                 <h4>Follow Us</h4>
                 <div class="social-links d-flex">
-                    <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                    <a href="<?php echo $data['link_twetter']; ?>" class="twitter"><i class="bi bi-twitter"></i></a>
+                    <a href="<?php echo $data['link_facebook']; ?>" class="facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="<?php echo $data['link_instagram']; ?>" class="instagram"><i
+                            class="bi bi-instagram"></i></a>
+                    <a href="<?php echo $data['link_linkedin']; ?>" class="linkedin"><i class="bi bi-linkedin"></i></a>
                 </div>
             </div>
-
         </div>
     </div>
-
+    <div class="copyright">
+        &copy; Copyright 2023<strong><span>
+                <?php echo $data['nama_perusahaan']; ?>
+            </span></strong>. All Rights Reserved
+    </div>
     <div class="container">
-        <div class="copyright">
-            &copy; Copyright <strong><span>Yummy</span></strong>. All Rights Reserved
-        </div>
         <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/ -->
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
         </div>
     </div>
-
 </footer><!-- End Footer -->
-<!-- End Footer -->
