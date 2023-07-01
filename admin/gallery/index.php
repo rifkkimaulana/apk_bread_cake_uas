@@ -13,51 +13,57 @@ $numRows = mysqli_num_rows($result);
                     <div class="card-header">
                         <h3 class="card-title">Data Gallery</h3>
                         <div class="card-tools">
-                            <a href='gallery/create.php?page=gallery' class="btn btn-info"><i
+                            <a href="gallery/create.php?page=gallery" class="btn btn-info"><i
                                     class="fas fa-plus"></i>Tambah Gallery</a>
                         </div>
                     </div>
                     <div class="card-body">
-                        <table width='100%' id="example2" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th style="width: 10px">No</th>
-                                    <th class="text-center">Gambar</th>
-                                    <th class="text-center">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if ($numRows > 0) {
-                                    $no = 1;
-                                    while ($data = mysqli_fetch_array($result)) {
-                                        ?>
-                                        <tr>
-                                            <td class="text-center">
-                                                <?= $no++ ?>
-                                            </td>
-                                            <td class="text-center"><img src="gallery/image/<?= $data['image'] ?>" width="100">
-                                            </td>
-                                            <td class="text-center">
-                                                <a class="btn btn-success"
-                                                    href='gallery/update.php?id=<?= $data['id'] ?>&page=gallery'>Edit</a>
-                                                <a class="btn btn-danger" onclick='return confirmDelete()'
-                                                    href='gallery/delete.php?id=<?= $data['id'] ?>&page=gallery'>Hapus</a>
-                                            </td>
-                                        </tr>
-                                        <?php
+                        <div class="table-responsive">
+                            <table id="example2" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10px">No</th>
+                                        <th class="text-center">Gambar</th>
+                                        <th class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    if ($numRows > 0) {
+                                        $no = 1;
+                                        while ($data = mysqli_fetch_array($result)) {
+                                            ?>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <?= $no++ ?>
+                                                </td>
+                                                <td class="text-center"><img src="gallery/image/<?= $data['image'] ?>"
+                                                        width="100"></td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-success"
+                                                        href="gallery/update.php?id=<?= $data['id'] ?>&page=gallery">Edit</a>
+                                                    <a class="btn btn-danger" onclick="return confirmDelete()"
+                                                        href="gallery/delete.php?id=<?= $data['id'] ?>&page=gallery">Hapus</a>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='3'>No entries found.</td></tr>";
                                     }
-                                } else {
-                                    echo "<tr><td colspan='3'>No entries found.</td></tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <?php if ($numRows > 0): ?>
-                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function confirmDelete() {
+        return confirm("Apakah Anda yakin ingin menghapus?");
+    }
+</script>
