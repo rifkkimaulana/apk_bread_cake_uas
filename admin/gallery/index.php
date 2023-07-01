@@ -33,10 +33,10 @@ $numRows = mysqli_num_rows($result);
                                     while ($data = mysqli_fetch_array($result)) {
                                         ?>
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 <?= $no++ ?>
                                             </td>
-                                            <td class="text-center"><img src="gallery/image/<?= $data['image'] ?>" width="200">
+                                            <td class="text-center"><img src="gallery/image/<?= $data['image'] ?>" width="100">
                                             </td>
                                             <td class="text-center">
                                                 <a class="btn btn-success"

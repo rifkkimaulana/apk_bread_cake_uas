@@ -10,7 +10,8 @@ include_once("../config/config.php");
                     <div class="card-header">
                         <h3 class="card-title">Data Kategori Artikel</h3>
                         <div class="card-tools">
-                            <a href='kategori_artikel/create.php?page=kategori_artikel' class="btn btn-info"><i class="fas fa-plus"></i>Tambah kategori</a>
+                            <a href='kategori_artikel/create.php?page=kategori_artikel' class="btn btn-info"><i
+                                    class="fas fa-plus"></i>Tambah kategori</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -27,18 +28,20 @@ include_once("../config/config.php");
                             $result = mysqli_query($mysqli, "SELECT * FROM tb_kategori_artikel ORDER BY id DESC");
 
                             while ($data = mysqli_fetch_array($result)) {
-                            ?>
+                                ?>
                                 <tbody>
                                     <tr>
-                                        <td>
+                                        <td class="text-center">
                                             <?= $no++ ?>
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <?= $data['kategori_artikel'] ?>
                                         </td>
                                         <td class="text-center">
-                                            <a class="btn btn-success" href='kategori_artikel/update.php?id=<?= $data['id'] ?>&page=kategori_artikel'>Edit</a>
-                                            <a class="btn btn-danger" onclick='return confirmDelete()' href='kategori_artikel/delete.php?id=<?= $data['id'] ?>&page=kategori_artikel'>Hapus</a>
+                                            <a class="btn btn-success"
+                                                href='kategori_artikel/update.php?id=<?= $data['id'] ?>&page=kategori_artikel'>Edit</a>
+                                            <a class="btn btn-danger" onclick='return confirmDelete()'
+                                                href='kategori_artikel/delete.php?id=<?= $data['id'] ?>&page=kategori_artikel'>Hapus</a>
                                         </td>
                                     </tr>
                                 </tbody>

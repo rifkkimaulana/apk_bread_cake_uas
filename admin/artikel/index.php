@@ -12,7 +12,8 @@ include_once("../config/config.php");
                         <h3 class="card-title">Data Artikel</h3>
                         <div class="card-tools">
                             <!-- This will cause the card to maximize when clicked -->
-                            <a href='artikel/create.php?page=artikel' class="btn btn-info"><i class="fas fa-plus"></i>Tambah Artikel</a>
+                            <a href='artikel/create.php?page=artikel' class="btn btn-info"><i
+                                    class="fas fa-plus"></i>Tambah Artikel</a>
                         </div>
                         <!-- /.card-tools -->
                     </div>
@@ -40,18 +41,18 @@ include_once("../config/config.php");
                             $result = mysqli_query($mysqli, $query);
                             if (mysqli_num_rows($result) > 0) {
                                 $no = 1; // Nomor urut
-
+                            
                                 while ($data = mysqli_fetch_array($result)) {
-                            ?>
+                                    ?>
                                     <tbody>
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 <?= $no++ ?>
                                             </td>
                                             <td>
                                                 <?= $data['judul_artikel'] ?>
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <?= $data['kategori_artikel'] ?>
                                             </td>
                                             <td>
@@ -59,18 +60,20 @@ include_once("../config/config.php");
                                             </td>
                                             <td><img src="artikel/image/<?= $data['cover'] ?>" width="100"></td>
                                             <td class="text-center">
-                                                <a class="btn btn-success" href='artikel/update.php?id=<?= $data['id'] ?>&page=artikel'>Edit</a>
-                                                <a class="btn btn-danger" onclick='return confirmDelete()' href='artikel/delete.php?id=<?= $data['id'] ?>&page=artikel'>Hapus</a>
+                                                <a class="btn btn-success"
+                                                    href='artikel/update.php?id=<?= $data['id'] ?>&page=artikel'>Edit</a>
+                                                <a class="btn btn-danger" onclick='return confirmDelete()'
+                                                    href='artikel/delete.php?id=<?= $data['id'] ?>&page=artikel'>Hapus</a>
                                             </td>
                                         </tr>
                                     </tbody>
-                                <?php
+                                    <?php
                                 }
                             } else {
                                 ?>
-                                <tr>
-                                    <td colspan="8">Tidak ada data artikel.</td>
-                                </tr>
+                            <tr>
+                                <td colspan="8">Tidak ada data artikel.</td>
+                            </tr>
                             <?php
                             }
                             ?>

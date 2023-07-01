@@ -31,13 +31,13 @@ include_once("../config/config.php");
                                 ?>
                                 <tbody>
                                     <tr>
-                                        <td>
+                                        <td class="text-center">
                                             <?= $no++ ?>
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <?= $data['kategori_produk'] ?>
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <a class="btn btn-success"
                                                 href='kategori_produk/update.php?id=<?= $data['id'] ?>&page=kategori_produk'>Edit</a>
                                             <a class="btn btn-danger" onclick='return confirmDelete()'

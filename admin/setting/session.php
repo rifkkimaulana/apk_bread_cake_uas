@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once("../../config/config.php");
+
 $user_check = $_SESSION['username'];
 $sql = "SELECT username FROM tb_users WHERE username='$user_check'";
 $result = mysqli_query($mysqli, $sql);

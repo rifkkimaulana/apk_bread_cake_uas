@@ -30,12 +30,13 @@ include_once("../config/config.php");
                             </thead>
                             <tbody>
                                 <?php
-                                $no = 1; // Inisialisasi variabel nomor
-                                $query = "SELECT p.id_penjualan, p.no_faktur, p.tanggal_penjualan, c.nama, pr.nama_produk, p.total_harga, p.metode_pembayaran
-              FROM tb_penjualan p
-              JOIN tb_customer c ON p.id_customer = c.id
-              JOIN tb_detail_penjualan dp ON p.no_faktur = dp.no_faktur
-              JOIN tb_produk pr ON dp.id_produk = pr.id";
+                                $no = 1;
+                                $query = "SELECT MAX(p.id_penjualan) AS id_penjualan, p.no_faktur, p.tanggal_penjualan, c.nama, pr.nama_produk, p.total_harga, p.metode_pembayaran
+                                FROM tb_penjualan p
+                                JOIN tb_customer c ON p.id_customer = c.id
+                                JOIN tb_detail_penjualan dp ON p.no_faktur = dp.no_faktur
+                                JOIN tb_produk pr ON dp.id_produk = pr.id
+                                GROUP BY p.no_faktur";
                                 $result = mysqli_query($mysqli, $query);
 
                                 if ($result && mysqli_num_rows($result) > 0) {
@@ -44,7 +45,7 @@ include_once("../config/config.php");
 
                                         <tr>
                                             <td>
-                                                <?php echo $no; ?> <!-- Menampilkan nomor -->
+                                                <?php echo $no; ?>
                                             </td>
                                             <td>
                                                 <?php echo $row['no_faktur']; ?>
