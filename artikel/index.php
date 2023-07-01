@@ -68,6 +68,14 @@
           <li><a href="../#gallery">Gallery</a></li>
           <li><a href="index.php">Artikel</a></li>
           <li><a href="../#contact">Contact</a></li>
+          <li class="nav-item">
+            <form action="search.php" method="GET" class="search-form">
+              <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Search...">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+              </div>
+            </form>
+          </li>
         </ul>
       </nav><!-- .navbar -->
 
