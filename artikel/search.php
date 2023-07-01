@@ -1,33 +1,17 @@
 <?php
-
 include "../config/config.php";
-// Mendapatkan ID artikel dari parameter URL
-$id = $_GET['id'];
 
-// Query untuk mendapatkan data artikel berdasarkan ID
+// Mendapatkan kata kunci pencarian dari parameter URL
+$searchKeyword = $_GET['search'];
+
+// Query untuk mencari data artikel berdasarkan judul
 $query = "SELECT a.*, k.kategori_artikel
           FROM tb_artikel a
           INNER JOIN tb_kategori_artikel k ON a.id_kategori = k.id
-          WHERE a.id = $id";
+          WHERE a.judul_artikel LIKE '%$searchKeyword%'";
 $result = mysqli_query($mysqli, $query);
-$row = mysqli_fetch_assoc($result);
 
-// Memastikan artikel dengan ID yang valid ditemukan
-if (!$row) {
-    // Jika artikel tidak ditemukan, bisa diarahkan ke halaman 404 atau halaman lainnya
-    //header("Location: not-found.php");
-    exit;
-}
-
-// Mengambil data artikel
-$id = $row['id'];
-$judul = $row['judul_artikel'];
-$konten = $row['content_artikel'];
-$kategori = $row['kategori_artikel'];
-$cover = $row['cover'];
-$created_time = $row['created_time'];
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -120,46 +104,45 @@ $created_time = $row['created_time'];
         <!-- ======= Breadcrumbs ======= -->
         <div class="breadcrumbs">
             <div class="container">
-                <h2>
-                    <?php echo $judul; ?>
+                <h2>Search Results for "
+                    <?php echo $searchKeyword; ?>"
                 </h2>
             </div>
         </div><!-- End Breadcrumbs -->
 
-        <!-- ======= Portfolio Details Section ======= -->
-        <section id="portfolio-details" class="portfolio-details">
+        <!-- ======= Portfolio Section ======= -->
+        <section id="portfolio" class="portfolio">
             <div class="container">
-                <div class="portfolio-details-container">
-                    <div class="portfolio-description">
 
-                        <div class="article">
-                            <?php if ($cover): ?>
-                                <img src="../admin/artikel/image/<?php echo $cover; ?>" alt="Cover Gambar Artikel">
-                            <?php endif; ?>
-                            <h2>
-                                <?php echo $judul; ?>
-                            </h2>
-                            <p>
-                                <?php echo $konten; ?>
-                            </p>
+                <div class="row">
+                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                        <div class="col-lg-4 col-md-6 portfolio-item">
+                            <div class="portfolio-wrap">
+                                <h4>
+                                    <?php echo $row['judul_artikel']; ?>
+                                </h4>
+
+                                <?php if ($row['cover']): ?>
+                                    <a href="artikel.php?id=<?php echo $row['id']; ?>  "><img
+                                            src="../admin/artikel/image/<?php echo $row['cover']; ?>" class="img-fluid"
+                                            alt=""></a>
+                                <?php endif; ?>
+
+                                <div class="portfolio-info">
+
+                                    <div class="portfolio-links">
+                                        <a href="artikel.php?id=<?php echo $row['id']; ?>"
+                                            title="Read More">Readmore</i></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Informasi Artikel</h3>
-                        <ul>
-                            <li><strong>Kategori:</strong>
-                                <?php echo $kategori; ?>
-                            </li>
-                            <li><strong>Waktu Pembuatan:</strong>
-                                <?php echo $created_time; ?>
-                            </li>
-                        </ul>
-                    </div>
+                    <?php endwhile; ?>
 
                 </div>
+
             </div>
-        </section><!-- End Portfolio Details Section -->
+        </section><!-- End Portfolio Section -->
     </main><!-- End #main -->
 
     <?php include '../footer.php'; ?>

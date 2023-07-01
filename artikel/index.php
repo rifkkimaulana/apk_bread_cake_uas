@@ -77,6 +77,7 @@
             </form>
           </li>
         </ul>
+
       </nav><!-- .navbar -->
 
       <a class="btn-book-a-table" href="../#book-a-table">Order</a>
